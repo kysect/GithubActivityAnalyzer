@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30626.31
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kysect.GithubActivityAnalyzer", "Kysect.GithubActivityAnalyzer\Kysect.GithubActivityAnalyzer.csproj", "{CBC5BC39-48CC-48F0-8136-0E4564818057}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CBC5BC39-48CC-48F0-8136-0E4564818057}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBC5BC39-48CC-48F0-8136-0E4564818057}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBC5BC39-48CC-48F0-8136-0E4564818057}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBC5BC39-48CC-48F0-8136-0E4564818057}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B697EBAD-7401-431A-89A5-0AB21AF05865}
+	EndGlobalSection
+EndGlobal
