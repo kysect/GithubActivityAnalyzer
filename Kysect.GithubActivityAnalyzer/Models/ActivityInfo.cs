@@ -22,10 +22,9 @@ namespace Kysect.GithubActivityAnalyzer.Models
 
         public int GetActivityForPeriod(DateTime from, DateTime to)
         {
-            return Contributions
-                .Select(c => (Date: DateTime.Parse(c.Date, CultureInfo.InvariantCulture), c.Count))
-                .Where(c => c.Date >= from && c.Date <= to)
-                .Sum(c => c.Count);
+            List<int> arr = (from element in Contributions where element.date <= to && element.date >= @from select element.Count).ToList();
+
+            return arr.Sum();
         }
     }
 }
