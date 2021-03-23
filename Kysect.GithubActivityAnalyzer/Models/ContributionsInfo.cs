@@ -13,7 +13,7 @@ namespace Kysect.GithubActivityAnalyzer.Models
         {
             Date = date;
             Count = count;
-            this.date = Convert.ToDateTime(date, CultureInfo.InvariantCulture);
+            this.date = DateTime.Parse(date, CultureInfo.InvariantCulture);
         }
 
         public ContributionsInfo()

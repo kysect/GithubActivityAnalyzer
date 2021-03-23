@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 
 namespace Kysect.GithubActivityAnalyzer.Models
@@ -22,9 +21,9 @@ namespace Kysect.GithubActivityAnalyzer.Models
 
         public int GetActivityForPeriod(DateTime from, DateTime to)
         {
-            List<int> arr = (from element in Contributions where element.date <= to && element.date >= @from select element.Count).ToList();
+            List<int> elements = (from element in Contributions where element.date <= to && element.date >= @from select element.Count).ToList();
 
-            return arr.Sum();
+            return elements.Sum();
         }
     }
 }

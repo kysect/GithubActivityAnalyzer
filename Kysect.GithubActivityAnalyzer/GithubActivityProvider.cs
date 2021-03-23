@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 using Kysect.GithubActivityAnalyzer.Models;
 using Newtonsoft.Json;
 
@@ -24,17 +21,12 @@ namespace Kysect.GithubActivityAnalyzer
         public async Task<ActivityInfo> GetActivityInfo(string username)
         {
             string response = await _client.GetStringAsync(Url + username);
-            var jstring = JsonConvert.DeserializeObject<ActivityInfo>(response);
-            var contributionsList = jstring.Contributions.ToList();
 
-            List<ContributionsInfo> keyToDelete = jstring.Contributions.Where(element => element.date > DateTime.Now).ToList();
-            foreach (var element in keyToDelete)
-            {
-                contributionsList.Remove(element);
-            }
+            var activityInfo = JsonConvert.DeserializeObject<ActivityInfo>(response);
+            var contributionsList = activityInfo.Contributions.Where(element => element.date <= DateTime.Now).ToList();
 
-            jstring.Contributions = contributionsList.ToArray();
-            return jstring;
+            activityInfo.Contributions = contributionsList.ToArray();
+            return activityInfo;
         }
     }
 }
