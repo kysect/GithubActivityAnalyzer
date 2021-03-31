@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Kysect.GithubActivityAnalyzer.Models;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Kysect.GithubActivityAnalyzer
 {
@@ -19,7 +19,7 @@ namespace Kysect.GithubActivityAnalyzer
         public async Task<ActivityInfo> GetActivityInfo(string username)
         {
             string response = await _client.GetStringAsync(Url + username);
-            return JsonConvert.DeserializeObject<ActivityInfo>(response);
+            return await JsonSerializer.Deserialize<Task<ActivityInfo>>(response);
         }
     }
 }
