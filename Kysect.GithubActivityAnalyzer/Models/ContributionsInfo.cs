@@ -1,14 +1,19 @@
-﻿namespace Kysect.GithubActivityAnalyzer.Models
+﻿using System;
+using System.Globalization;
+using Newtonsoft.Json;
+
+namespace Kysect.GithubActivityAnalyzer.Models
 {
     public class ContributionsInfo
-    {
-        public string Date { get; set; }
+    { 
+        [JsonProperty("date")]
+        public DateTime Date { get; set; }
         public int Count { get; set; }
 
-        public ContributionsInfo(string date, int count)
+        public ContributionsInfo(string dateAsString, int count)
         {
-            Date = date;
             Count = count;
+            this.Date = DateTime.Parse(dateAsString, CultureInfo.InvariantCulture);
         }
 
         public ContributionsInfo()

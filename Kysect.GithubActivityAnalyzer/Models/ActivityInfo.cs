@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 
 namespace Kysect.GithubActivityAnalyzer.Models
@@ -13,19 +12,18 @@ namespace Kysect.GithubActivityAnalyzer.Models
         public int Total => PerMonthActivity().Sum(a => a.Count);
 
         public List<ContributionsInfo> PerMonthActivity()
-        {
+        { 
             return Contributions
-                .GroupBy(c => c.Date.Substring(0, 7))
+                .GroupBy(c => c.Date.Month.ToString()+ "." + c.Date.Year.ToString())
                 .Select(c => new ContributionsInfo(c.Key, c.Sum(_ => _.Count)))
                 .ToList();
         }
 
         public int GetActivityForPeriod(DateTime from, DateTime to)
         {
-            return Contributions
-                .Select(c => (Date: DateTime.Parse(c.Date, CultureInfo.InvariantCulture), c.Count))
-                .Where(c => c.Date >= from && c.Date <= to)
-                .Sum(c => c.Count);
+            List<int> elements = (from element in Contributions where element.Date <= to && element.Date >= @from select element.Count).ToList();
+
+            return elements.Sum();
         }
     }
 }
