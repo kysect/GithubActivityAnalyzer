@@ -12,9 +12,9 @@ namespace Kysect.GithubActivityAnalyzer.Models
         public int Total => PerMonthActivity().Sum(a => a.Count);
 
         public List<ContributionsInfo> PerMonthActivity()
-        {
+        { 
             return Contributions
-                .GroupBy(c => c.DateAsString.Substring(0, 7))
+                .GroupBy(c => c.Date.Month.ToString()+ "." + c.Date.Year.ToString())
                 .Select(c => new ContributionsInfo(c.Key, c.Sum(_ => _.Count)))
                 .ToList();
         }
