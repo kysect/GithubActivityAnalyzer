@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 using Kysect.GithubActivityAnalyzer.Group;
 using Kysect.GithubActivityAnalyzer.Models;
 

@@ -12,12 +12,7 @@ namespace Kysect.GithubActivityAnalyzer.Group
         public string GroupName { get; set; }
         public List<Student> Students { get; set; }
 
-        public int TotalContributions
-        {
-            get => (from student in Students select student.TotalContributions).ToArray().Sum();
-
-            private set => TotalContributions = (from student in Students select student.TotalContributions).ToArray().Sum();
-        }
+        public int TotalContributions => TotalActivity();
 
         public StudyGroup(string groupName)
         {
@@ -31,6 +26,11 @@ namespace Kysect.GithubActivityAnalyzer.Group
             Students = students;
         }
 
+        private int TotalActivity()
+        {
+            return (from student in Students select student.TotalContributions).ToArray().Sum();
+        }
+
         public void AddStudents(params string[] username)
         {
             for (int i = 0; i < username.Length; i++)
@@ -38,27 +38,51 @@ namespace Kysect.GithubActivityAnalyzer.Group
                 Students.Add(new Student(username[i]));
             }
         }
+        //+по интервалам
 
-        public int GetMinValue()
+        public Student GetMinValueStudent(DateTime? from = null, DateTime? to = null)
         {
-           return (from student in Students select student.TotalContributions).ToList().Min();
-        }
-        public int GetMaxValue()
-        {
-           return (from student in Students select student.TotalContributions).ToList().Max();
-        }
+            DateTime minValue = DateTime.MaxValue;
+            foreach (var days in from student in Students from days in student.ActivityInfo.Contributions where days.Date < minValue select days)
+            {
+                minValue = days.Date;
+            }
 
-        public Student GetMinValueStudent()
-        {
-            return Students.FirstOrDefault(s => s.TotalContributions == GetMinValue());
+            from = from ?? minValue;
+            to = to ?? DateTime.Now;
+
+                return Students.FirstOrDefault(s =>
+                    s.ActivityInfo.GetActivityForPeriod(from.GetValueOrDefault(), to.GetValueOrDefault()) ==
+                    Students.Select(k => k.ActivityInfo.GetActivityForPeriod(from.GetValueOrDefault(), to.GetValueOrDefault())).ToList().Min());
+            
         }
-        public Student GetMaxValueStudent()
+        public Student GetMaxValueStudent(DateTime? from = null, DateTime? to = null)
         {
-            return Students.FirstOrDefault(s => s.TotalContributions == GetMaxValue());
+            DateTime minValue = DateTime.MaxValue;
+            foreach (var days in from student in Students from days in student.ActivityInfo.Contributions where days.Date < minValue select days)
+            {
+                minValue = days.Date;
+            }
+
+            from = from ?? minValue;
+            to = to ?? DateTime.Now;
+
+            return Students.FirstOrDefault(s =>
+                s.ActivityInfo.GetActivityForPeriod(from.GetValueOrDefault(), to.GetValueOrDefault()) ==
+                Students.Select(k => k.ActivityInfo.GetActivityForPeriod(from.GetValueOrDefault(), to.GetValueOrDefault())).ToList().Max());
         }
-        public int GetAverageValue()
+        public double GetAverageValue(DateTime? from = null, DateTime? to = null)
         {
-            return Convert.ToInt32((from student in Students select student.TotalContributions).ToList().Average()) ;
+            DateTime minValue = DateTime.MaxValue;
+            foreach (var days in from student in Students from days in student.ActivityInfo.Contributions where days.Date < minValue select days)
+            {
+                minValue = days.Date;
+            }
+
+            from = from ?? minValue;
+            to = to ?? DateTime.Now;
+            
+            return Students.Select(k => k.ActivityInfo.GetActivityForPeriod(from.GetValueOrDefault(), to.GetValueOrDefault())).ToList().Average();
         }
 
         public Dictionary<string, int> GetShortInfo()
@@ -78,11 +102,16 @@ namespace Kysect.GithubActivityAnalyzer.Group
             return Students.Select(student => student.ActivityInfo.GetActivityForPeriod(@from, to)).ToList().Sum();
         }
 
-        public int GetAverageMonthActivity()
+        public double GetAverageMonthActivity()
         {
             List<int> averegeInts = Students.Select(student => Convert.ToInt32(student.ActivityInfo.PerMonthActivity().Average(c => c.Count))).ToList();
-            return Convert.ToInt32(averegeInts.Average());
+            return averegeInts.Average();
         }
 
-   }
+        public double GetMovingAverage(DateTime from, DateTime to)
+        {
+            return Students.Select(s => s.GetMovingAverage(from, to)).ToList().Average();
+        }
+
+    }
 }
