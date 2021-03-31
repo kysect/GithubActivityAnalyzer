@@ -7,7 +7,6 @@ namespace Kysect.GithubActivityAnalyzer.Sample
     {
         static void Main(string[] args)
         {
-            
         }
     }
 }
