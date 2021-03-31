@@ -14,14 +14,14 @@ namespace Kysect.GithubActivityAnalyzer.Models
         public List<ContributionsInfo> PerMonthActivity()
         {
             return Contributions
-                .GroupBy(c => c.Date.Substring(0, 7))
+                .GroupBy(c => c.DateAsString.Substring(0, 7))
                 .Select(c => new ContributionsInfo(c.Key, c.Sum(_ => _.Count)))
                 .ToList();
         }
 
         public int GetActivityForPeriod(DateTime from, DateTime to)
         {
-            List<int> elements = (from element in Contributions where element.date <= to && element.date >= @from select element.Count).ToList();
+            List<int> elements = (from element in Contributions where element.Date <= to && element.Date >= @from select element.Count).ToList();
 
             return elements.Sum();
         }

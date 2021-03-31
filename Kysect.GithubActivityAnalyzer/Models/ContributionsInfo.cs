@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Globalization;
+using Newtonsoft.Json;
 
 namespace Kysect.GithubActivityAnalyzer.Models
 {
     public class ContributionsInfo
-    {
-        public string Date { get; set; }
-        public DateTime date;
+    { 
+        [JsonProperty("dateAsString")]
+        public string DateAsString { get; set; }
+        public DateTime Date { get; set; }
         public int Count { get; set; }
 
-        public ContributionsInfo(string date, int count)
+        public ContributionsInfo(string dateAsString, int count)
         {
-            Date = date;
+            DateAsString = dateAsString;
             Count = count;
-            this.date = DateTime.Parse(date, CultureInfo.InvariantCulture);
+            this.Date = DateTime.Parse(dateAsString, CultureInfo.InvariantCulture);
         }
 
         public ContributionsInfo()

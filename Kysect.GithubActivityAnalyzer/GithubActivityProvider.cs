@@ -23,7 +23,7 @@ namespace Kysect.GithubActivityAnalyzer
             string response = await _client.GetStringAsync(Url + username);
 
             var activityInfo = JsonConvert.DeserializeObject<ActivityInfo>(response);
-            var contributionsList = activityInfo.Contributions.Where(element => element.date <= DateTime.Now).ToList();
+            var contributionsList = activityInfo.Contributions.Where(element => element.Date <= DateTime.Now).ToList();
 
             activityInfo.Contributions = contributionsList.ToArray();
             return activityInfo;
