@@ -19,7 +19,7 @@ namespace Kysect.GithubActivityAnalyzer
         public async Task<ActivityInfo> GetActivityInfo(string username)
         {
             string response = await _client.GetStringAsync(Url + username);
-            return await JsonSerializer.Deserialize<Task<ActivityInfo>>(response);
+            return JsonSerializer.Deserialize<ActivityInfo>(response, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
     }
 }

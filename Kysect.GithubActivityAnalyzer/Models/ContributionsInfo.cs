@@ -10,9 +10,6 @@
             Date = date;
             Count = count;
         }
-
-        public ContributionsInfo()
-        {
-        }
+        public ContributionsInfo() { }
     }
 }
