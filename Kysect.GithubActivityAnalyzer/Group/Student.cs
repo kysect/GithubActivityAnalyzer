@@ -8,20 +8,19 @@ namespace Kysect.GithubActivityAnalyzer.Group
     {
         public string Username { get; set; }
         public ActivityInfo ActivityInfo { get; set; }
-
-        private GithubActivityProvider newProvider = new GithubActivityProvider();
+        
 
         public int TotalContributions => ActivityInfo.Total;
 
-        public Student(string username)
+        public Student(string username, GithubActivityProvider provider)
         {
             Username = username;
-            AddActivityInfo();
+            AddActivityInfo(provider);
         }
 
-        public void AddActivityInfo()
+        public void AddActivityInfo(GithubActivityProvider provider)
         {
-            ActivityInfo = newProvider.GetActivityInfo(Username).Result;
+            ActivityInfo = provider.GetActivityInfo(Username).Result;
         }
 
 
@@ -32,12 +31,15 @@ namespace Kysect.GithubActivityAnalyzer.Group
 
         public double GetAverageMonthActivity()
         {
-            return ActivityInfo.PerMonthActivity().Average(c => c.Count);
+            return ActivityInfo.PerMonthActivity()
+                .Average(c => c.Count);
         }
 
         public double GetMovingAverage(DateTime from, DateTime to)
         {
-            return (from days in ActivityInfo.Contributions where days.Date <= to && days.Date >= @from select days.Count).Average();
+            return ActivityInfo.Contributions
+                .Where(k => k.Date <= @to && k.Date >= @from)
+                .Average(c => c.Count);
         }
     }
 }
