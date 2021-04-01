@@ -1,4 +1,5 @@
 ﻿using System;
+using Kysect.GithubActivityAnalyzer.Group;
 
 namespace Kysect.GithubActivityAnalyzer.Sample
 {
@@ -6,7 +7,7 @@ namespace Kysect.GithubActivityAnalyzer.Sample
     {
         static void Main(string[] args)
         {
-            
+
         }
     }
 }
