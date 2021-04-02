@@ -11,80 +11,53 @@ namespace Kysect.GithubActivityAnalyzer.DetailedStats
    {
        public Dictionary<string, StudyGroup> Groups;
 
-       public struct MonthlyStatistics
-       {
-           public string Month;
-           public (Student,int) MinValueStudent;
-           public (Student, int) MaxValueStudent;
-           public double AverageValue;
-           public int TotalContributions;
-           public List<(Student, int)> DetailedStat;
-       }
-
-       public DetailedStats(List<(string,string)> studentsList, GithubActivityProvider provider)//номер группы, гитхаб
+       public DetailedStats(List<StudentInfo> studentInfos, GithubActivityProvider provider)
        {
            Groups = new Dictionary<string, StudyGroup>();
-           foreach (var pair in studentsList)
+           foreach (var pair in studentInfos)//убрать колхоз 
            {
-               if (!Groups.ContainsKey(pair.Item1))
+               if (!Groups.ContainsKey(pair.Groupname))
                {
-                   Groups.Add(pair.Item1, new StudyGroup(pair.Item1));
-                   Groups[pair.Item1].Students.Add(new Student(pair.Item2, provider));
+                   Groups.Add(pair.Groupname, new StudyGroup(pair.Groupname));
+                   Groups[pair.Groupname].Students.Add(new Student(pair.Username, provider));
                }
                else
                {
-                   Groups[pair.Item1].Students.Add(new Student(pair.Item2, provider));
+                   Groups[pair.Groupname].Students.Add(new Student(pair.Username, provider));
                }
            }
        }
 
-       public List<GroupInfo> GetDetailedStat(DateTime inputDate)
+       public List<GroupInfo> GetDetailedStat(DateTime fromDate)
        {
            List<GroupInfo> stats = new List<GroupInfo>();
 
-           DateTime from = inputDate;
+           DateTime from = fromDate;
            DateTime to = from.AddMonths(1);
 
            foreach (var group in Groups)
            {
-               var pair = new GroupInfo(group.Value, new List<MonthlyStatistics>());
+               var groupMonthPair = new GroupInfo(group.Value, new List<MonthlyStatistics>());
                while (to <= DateTime.Now)
                {
-                    var monthStat = new MonthlyStatistics()
-                    {
-                           DetailedStat = new List<(Student, int)>()
-                    }; 
 
-                    foreach (var student in group.Value.Students) 
-                    {
-                        monthStat.DetailedStat.Add((student, student.GetActivityForPeriod(from, to)));
-                    }
+                   var DetailedStat = new List<(Student, int)>();
 
-                    monthStat.AverageValue = monthStat.DetailedStat.Average(a => a.Item2);
-
-                    monthStat.TotalContributions = monthStat.DetailedStat.Sum(a => a.Item2);
-
-                    monthStat.Month = from.Month.ToString() +"."+ from.Year.ToString();
-
-                    monthStat.MinValueStudent = (monthStat.DetailedStat
-                        .OrderBy(a => a.Item2)
-                        .First());
-
-                    monthStat.MaxValueStudent = (monthStat.DetailedStat
-                        .OrderBy(a => a.Item2)
-                        .Last());
-
-                    pair.Statistics.Add(monthStat);
+                   foreach (var student in group.Value.Students) 
+                   {
+                       DetailedStat.Add((student, student.GetActivityForPeriod(from, to)));
+                   }
+                   var monthStat = new MonthlyStatistics(from, DetailedStat);
+                  
+                    groupMonthPair.Statistics.Add(monthStat);
 
                     from = to;
                     to = to.AddMonths(1);
 
                }
-
-               from = inputDate;
+               from = fromDate;
                to = from.AddMonths(1);
-
-               stats.Add(pair);
+               stats.Add(groupMonthPair);
            }
            return stats;
        }
