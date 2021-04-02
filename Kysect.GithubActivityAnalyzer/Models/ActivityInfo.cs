@@ -10,7 +10,14 @@ namespace Kysect.GithubActivityAnalyzer.Models
         public YearActivityInfo[] Years { get; set; }
         public ContributionsInfo[] Contributions { get; set; }
 
-        public int Total => PerMonthActivity().Sum(a => a.Count);
+        public int Total
+        {
+            get
+            {
+                return PerMonthActivity().Sum(a => a.Count);
+            }
+            private set { }
+        }
 
         public List<ContributionsInfo> PerMonthActivity()
         {
@@ -27,5 +34,6 @@ namespace Kysect.GithubActivityAnalyzer.Models
                 .Where(c => c.Date >= from && c.Date <= to)
                 .Sum(c => c.Count);
         }
+        public ActivityInfo() { }
     }
 }
