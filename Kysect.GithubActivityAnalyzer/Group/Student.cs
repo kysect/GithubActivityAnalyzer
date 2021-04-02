@@ -9,7 +9,6 @@ namespace Kysect.GithubActivityAnalyzer.Group
         public string Username { get; set; }
         public ActivityInfo ActivityInfo { get; set; }
         
-
         public int TotalContributions => ActivityInfo.Total;
 
         public Student(string username, GithubActivityProvider provider)
