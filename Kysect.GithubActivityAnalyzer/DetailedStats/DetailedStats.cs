@@ -18,7 +18,7 @@ namespace Kysect.GithubActivityAnalyzer.DetailedStats
            public (Student, int) MaxValueStudent;
            public double AverageValue;
            public int TotalContributions;
-           public Dictionary<Student, int> DetailedStat;
+           public List<(Student, int)> DetailedStat;
        }
 
        public DetailedStats(List<(string,string)> studentsList, GithubActivityProvider provider)//номер группы, гитхаб
@@ -52,40 +52,38 @@ namespace Kysect.GithubActivityAnalyzer.DetailedStats
                {
                     var monthStat = new MonthlyStatistics()
                     {
-                           DetailedStat = new Dictionary<Student, int>()
+                           DetailedStat = new List<(Student, int)>()
                     }; 
 
                     foreach (var student in group.Value.Students) 
                     {
-                        monthStat.DetailedStat.Add(student, student.GetActivityForPeriod(from, to));
+                        monthStat.DetailedStat.Add((student, student.GetActivityForPeriod(from, to)));
                     }
 
-                    monthStat.AverageValue = monthStat.DetailedStat.Average(a => a.Value);
+                    monthStat.AverageValue = monthStat.DetailedStat.Average(a => a.Item2);
 
-                    monthStat.TotalContributions = monthStat.DetailedStat.Sum(a => a.Value);
+                    monthStat.TotalContributions = monthStat.DetailedStat.Sum(a => a.Item2);
 
                     monthStat.Month = from.Month.ToString() +"."+ from.Year.ToString();
-                    
-                    monthStat.MinValueStudent = (monthStat.DetailedStat.
-                            OrderBy(a => a.Value).
-                            First().Key,
-                        monthStat.DetailedStat.
-                            OrderBy(a => a.Value)
-                            .First().Value);
+
+                    monthStat.MinValueStudent = (monthStat.DetailedStat
+                        .OrderBy(a => a.Item2)
+                        .First());
 
                     monthStat.MaxValueStudent = (monthStat.DetailedStat
-                            .OrderBy(a => a.Value)
-                            .Last().Key,
-                        monthStat.DetailedStat
-                            .OrderBy(a => a.Value)
-                            .Last().Value);
+                        .OrderBy(a => a.Item2)
+                        .Last());
+
                     pair.Statistics.Add(monthStat);
+
                     from = to;
                     to = to.AddMonths(1);
+
                }
 
                from = inputDate;
                to = from.AddMonths(1);
+
                stats.Add(pair);
            }
            return stats;
