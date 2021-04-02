@@ -3,7 +3,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Kysect.GithubActivityAnalyzer.Models;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Kysect.GithubActivityAnalyzer
 {
@@ -21,8 +21,7 @@ namespace Kysect.GithubActivityAnalyzer
         public async Task<ActivityInfo> GetActivityInfo(string username)
         {
             string response = await _client.GetStringAsync(Url + username);
-
-            var activityInfo = JsonConvert.DeserializeObject<ActivityInfo>(response);
+            var activityInfo = JsonSerializer.Deserialize<ActivityInfo>(response, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             activityInfo.Contributions = activityInfo.Contributions.Where(element => element.Date <= DateTime.Now).ToArray();
             return activityInfo;
         }
@@ -31,7 +30,7 @@ namespace Kysect.GithubActivityAnalyzer
         {
             string response = await _client.GetStringAsync(Url + username);
 
-            var activityInfo = JsonConvert.DeserializeObject<ActivityInfo>(response);
+            var activityInfo = JsonSerializer.Deserialize<ActivityInfo>(response, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             activityInfo.Contributions = activityInfo.Contributions.Where(element => element.Date <= to && element.Date >= from).ToArray();
             return activityInfo;
         }

@@ -4,5 +4,6 @@
     {
         public string Year { get; set; }
         public int Total { get; set; }
+        public YearActivityInfo() { }
     }
 }
