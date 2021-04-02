@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Globalization;
-using Newtonsoft.Json;
 
 namespace Kysect.GithubActivityAnalyzer.Models
 {
     public class ContributionsInfo
     { 
-        [JsonProperty("date")]
         public DateTime Date { get; set; }
         public int Count { get; set; }
 
