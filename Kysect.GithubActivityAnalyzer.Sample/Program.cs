@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Kysect.GithubActivityAnalyzer.DetailedStats;
 using Kysect.GithubActivityAnalyzer.Group;
 
 namespace Kysect.GithubActivityAnalyzer.Sample

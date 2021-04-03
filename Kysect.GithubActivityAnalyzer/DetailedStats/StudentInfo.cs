@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 
 namespace Kysect.GithubActivityAnalyzer.DetailedStats
 {
     public class StudentInfo
     {
         public string Username { get; set; }
-        public string Groupname { get;set; }
+        public string NumberOfGroup { get;set; }
 
-        public StudentInfo(string username, string groupname)
-        {
+        public StudentInfo(string numberOfGroup, string username)
+        { 
+            NumberOfGroup = numberOfGroup;
             Username = username;
-            Groupname = groupname;
         }
     }
 }

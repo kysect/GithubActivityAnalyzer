@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Kysect.GithubActivityAnalyzer.Group;
 
 namespace Kysect.GithubActivityAnalyzer.DetailedStats
@@ -13,19 +12,12 @@ namespace Kysect.GithubActivityAnalyzer.DetailedStats
 
        public DetailedStats(List<StudentInfo> studentInfos, GithubActivityProvider provider)
        {
-           Groups = new Dictionary<string, StudyGroup>();
-           foreach (var pair in studentInfos)//убрать колхоз 
-           {
-               if (!Groups.ContainsKey(pair.Groupname))
-               {
-                   Groups.Add(pair.Groupname, new StudyGroup(pair.Groupname));
-                   Groups[pair.Groupname].Students.Add(new Student(pair.Username, provider));
-               }
-               else
-               {
-                   Groups[pair.Groupname].Students.Add(new Student(pair.Username, provider));
-               }
-           }
+           Groups = studentInfos
+               .GroupBy(c => c.NumberOfGroup)
+               .ToDictionary(c => c.Key, k => new StudyGroup(k.Key, studentInfos
+                   .Where(c => c.NumberOfGroup == k.Key )
+                   .Select(c => new Student(c.Username, provider))
+                   .ToList()));
        }
 
        public List<GroupInfo> GetDetailedStat(DateTime fromDate)
@@ -33,30 +25,21 @@ namespace Kysect.GithubActivityAnalyzer.DetailedStats
            List<GroupInfo> stats = new List<GroupInfo>();
 
            DateTime from = fromDate;
-           DateTime to = from.AddMonths(1);
-
            foreach (var group in Groups)
            {
                var groupMonthPair = new GroupInfo(group.Value, new List<MonthlyStatistics>());
-               while (to <= DateTime.Now)
+               for (DateTime to = from.AddMonths(1); to <= DateTime.Now; to = from.AddMonths(1))
                {
+                   var detailedStat = @group.Value.Students
+                       .Select(student => (student, student.GetActivityForPeriod(@from, to)))
+                       .ToList();
 
-                   var DetailedStat = new List<(Student, int)>();
-
-                   foreach (var student in group.Value.Students) 
-                   {
-                       DetailedStat.Add((student, student.GetActivityForPeriod(from, to)));
-                   }
-                   var monthStat = new MonthlyStatistics(from, DetailedStat);
-                  
-                    groupMonthPair.Statistics.Add(monthStat);
+                   var monthStat = new MonthlyStatistics(from, detailedStat);
+                   groupMonthPair.Statistics.Add(monthStat);
 
                     from = to;
-                    to = to.AddMonths(1);
-
                }
                from = fromDate;
-               to = from.AddMonths(1);
                stats.Add(groupMonthPair);
            }
            return stats;
