@@ -1,7 +1,9 @@
-﻿using System;
+﻿
+
+using System;
 using System.Collections.Generic;
 using Kysect.GithubActivityAnalyzer.DetailedStats;
-using Kysect.GithubActivityAnalyzer.Group;
+using Kysect.GithubActivityAnalyzer.ExcelExport;
 
 namespace Kysect.GithubActivityAnalyzer.Sample
 {
@@ -9,7 +11,6 @@ namespace Kysect.GithubActivityAnalyzer.Sample
     {
         static void Main(string[] args)
         {
-          
         }
     }
 }
