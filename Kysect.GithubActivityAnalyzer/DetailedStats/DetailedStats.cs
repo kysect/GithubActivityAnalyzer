@@ -8,16 +8,13 @@ namespace Kysect.GithubActivityAnalyzer.DetailedStats
     
    public class DetailedStats
    {
-       public Dictionary<string, StudyGroup> Groups;
+       public Dictionary<string, StudyGroup> Groups { get; }
 
        public DetailedStats(List<StudentInfo> studentInfos, GithubActivityProvider provider)
        {
            Groups = studentInfos
                .GroupBy(c => c.NumberOfGroup)
-               .ToDictionary(c => c.Key, k => new StudyGroup(k.Key, studentInfos
-                   .Where(c => c.NumberOfGroup == k.Key )
-                   .Select(c => new Student(c.Username, provider))
-                   .ToList()));
+               .ToDictionary(c => c.Key, k => new StudyGroup(k.Key, k.Select(c => new Student(c.Username, provider)).ToList()));
        }
 
        public List<GroupInfo> GetDetailedStat(DateTime fromDate)
@@ -30,8 +27,8 @@ namespace Kysect.GithubActivityAnalyzer.DetailedStats
                var groupMonthPair = new GroupInfo(group.Value, new List<MonthlyStatistics>());
                for (DateTime to = from.AddMonths(1); to <= DateTime.Now; to = from.AddMonths(1))
                {
-                   var detailedStat = @group.Value.Students
-                       .Select(student => (student, student.GetActivityForPeriod(@from, to)))
+                   var detailedStat = group.Value.Students
+                       .Select(student => (student, student.GetActivityForPeriod(from, to)))
                        .ToList();
 
                    var monthStat = new MonthlyStatistics(from, detailedStat);
