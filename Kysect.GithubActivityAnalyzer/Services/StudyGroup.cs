@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Kysect.GithubActivityAnalyzer.Models.ApiResponses;
 
-namespace Kysect.GithubActivityAnalyzer.Group
+namespace Kysect.GithubActivityAnalyzer.Services
 {
    public class StudyGroup
    {

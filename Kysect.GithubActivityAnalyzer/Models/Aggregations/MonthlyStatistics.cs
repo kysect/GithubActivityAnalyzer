@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Kysect.GithubActivityAnalyzer.Group;
+using Kysect.GithubActivityAnalyzer.Services;
 
-namespace Kysect.GithubActivityAnalyzer.DetailedStats
+namespace Kysect.GithubActivityAnalyzer.Models.Aggregations
 {
     public class MonthlyStatistics
     {
