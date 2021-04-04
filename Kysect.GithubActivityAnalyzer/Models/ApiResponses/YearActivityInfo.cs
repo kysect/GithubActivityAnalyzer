@@ -1,4 +1,4 @@
-﻿namespace Kysect.GithubActivityAnalyzer.Models
+﻿namespace Kysect.GithubActivityAnalyzer.Models.ApiResponses
 {
     public class YearActivityInfo
     {

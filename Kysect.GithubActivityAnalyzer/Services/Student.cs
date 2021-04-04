@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using Kysect.GithubActivityAnalyzer.Models;
+using Kysect.GithubActivityAnalyzer.Models.ApiResponses;
 
-namespace Kysect.GithubActivityAnalyzer.Group
+namespace Kysect.GithubActivityAnalyzer.Services
 {
     public class Student
     {

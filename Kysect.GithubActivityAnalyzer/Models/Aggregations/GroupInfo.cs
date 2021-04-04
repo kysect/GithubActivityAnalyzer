@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Kysect.GithubActivityAnalyzer.Group;
+using Kysect.GithubActivityAnalyzer.Services;
 
-namespace Kysect.GithubActivityAnalyzer.DetailedStats
+namespace Kysect.GithubActivityAnalyzer.Models.Aggregations
 {
     public class GroupInfo
     {
