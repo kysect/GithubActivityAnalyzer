@@ -5,7 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Kysect.GithubActivityAnalyzer.Models.ApiResponses;
 
-namespace Kysect.GithubActivityAnalyzer
+namespace Kysect.GithubActivityAnalyzer.Services
 {
     public class GithubActivityProvider
     {

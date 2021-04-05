@@ -71,7 +71,7 @@ namespace Kysect.GithubActivityAnalyzer.Services
                 {
                     worksheetDetailed.Cell(1, column).Value = stat.Month;
                     worksheetDetailed.Cell(1, column).Style.DateFormat.Format = "MMMM-yyyy";
-                    int row = 2; ;
+                    int row = 2;
                     foreach (var studentResult in stat.DetailedStat)
                     {
                         worksheetDetailed.Cell(row, column).Value = studentResult.Item2;
