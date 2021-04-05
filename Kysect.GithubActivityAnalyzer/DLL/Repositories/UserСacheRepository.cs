@@ -7,46 +7,46 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kysect.GithubActivityAnalyzer.DLL.Repositories
 {
-    public class UserCashRepository 
+    public class UserСacheRepository
     {
         DbContext _context;
-        DbSet<UserCash> _dbSet;
+        DbSet<UserСache> _dbSet;
 
-        public UserCashRepository(DbContext context, DbSet<UserCash> set)
+        public UserСacheRepository(DbContext context, DbSet<UserСache> set)
         {
             _context = context;
             _dbSet = set;
         }
 
-        public IQueryable<UserCash> GetAll()
+        public IQueryable<UserСache> GetAll()
         {
             return _dbSet;
         }
 
-        public UserCash GetByUsername(string username)
+        public UserСache FindByUsername(string username)
         {
             return _dbSet.Find(username);
         }
 
-        public UserCash Create(UserCash item)
+        public UserСache Create(UserСache item)
         {
             _dbSet.Add(item);
             _context.SaveChanges();
             return item;
         }
-        public void Update(UserCash item)
+        public void Update(UserСache item)
         {
             DeleteByUsername(item.Username);
             Create(item);
         }
-        public void Delete(UserCash item)
+        public void Delete(UserСache item)
         {
             _dbSet.Remove(item);
             _context.SaveChanges();
         }
         public void DeleteByUsername(string username)
         {
-            Delete(GetByUsername(username));
+            Delete(FindByUsername(username));
         }
     }
 }

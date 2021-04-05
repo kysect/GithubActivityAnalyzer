@@ -9,12 +9,12 @@ namespace Kysect.GithubActivityAnalyzer.DLL.Converters
 {
     public class UserCashConverter
     {
-        public UserCash ConvertToUserCash(string username, ActivityInfo info)
+        public UserСache ConvertToUserCash(string username, ActivityInfo info)
         {
             var cash = JsonSerializer.Serialize(info);
-            return new UserCash() { Username = username, ActivityInfo = cash };
+            return new UserСache() { Username = username, ActivityInfo = cash };
         }
-        public ActivityInfo GetActivityFromUserCash(UserCash userCash)
+        public ActivityInfo GetActivityFromUserCash(UserСache userCash)
         {
             var activity = JsonSerializer.Deserialize<ActivityInfo>(userCash.ActivityInfo, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             return activity;
