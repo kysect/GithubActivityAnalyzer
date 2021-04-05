@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
@@ -33,6 +34,14 @@ namespace Kysect.GithubActivityAnalyzer.Services
             var activityInfo = JsonSerializer.Deserialize<ActivityInfo>(response, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             activityInfo.Contributions = activityInfo.Contributions.Where(element => element.Date <= to && element.Date >= from).ToArray();
             return activityInfo;
+        }
+
+        public ParallelQuery<Student> GetStudentListInfo(List<string> usernames)
+        {
+            var result = from user in usernames.AsParallel()
+                          select new Student(user, this);
+                
+            return result;
         }
     }
 }
