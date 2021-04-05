@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Kysect.GithubActivityAnalyzer.DLL.Entities;
+﻿using System.Linq;
+using System.Text.Json;
+using Kysect.GithubActivityAnalyzer.Models.ApiResponses;
+using Kysect.GithubActivityAnalyzer.ResultCache.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kysect.GithubActivityAnalyzer.DLL.Repositories
+namespace Kysect.GithubActivityAnalyzer.ResultCache.Repositories
 {
     public class UserСacheRepository
     {
-        DbContext _context;
-        DbSet<UserСache> _dbSet;
+        readonly DbContext _context;
+        readonly DbSet<UserСache> _dbSet;
 
         public UserСacheRepository(DbContext context, DbSet<UserСache> set)
         {
@@ -47,6 +46,18 @@ namespace Kysect.GithubActivityAnalyzer.DLL.Repositories
         public void DeleteByUsername(string username)
         {
             Delete(FindByUsername(username));
+        }
+
+        public UserСache ConvertToUserCash(string username, ActivityInfo info)
+        {
+            var cash = JsonSerializer.Serialize(info);
+            return new UserСache() { Username = username, ActivityInfo = cash };
+        }
+
+        public ActivityInfo GetActivityFromUserCash(UserСache userCash)
+        {
+            var activity = JsonSerializer.Deserialize<ActivityInfo>(userCash.ActivityInfo, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            return activity;
         }
     }
 }

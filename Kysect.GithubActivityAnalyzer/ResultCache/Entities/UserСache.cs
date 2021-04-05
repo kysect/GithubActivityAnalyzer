@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Kysect.GithubActivityAnalyzer.DLL.Entities
+﻿namespace Kysect.GithubActivityAnalyzer.ResultCache.Entities
 {
     public class UserСache
     {

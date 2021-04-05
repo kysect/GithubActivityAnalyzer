@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kysect.GithubActivityAnalyzer.Models
+namespace Kysect.GithubActivityAnalyzer.Models.ApiResponses
 {
     public class ActivityInfo
     {

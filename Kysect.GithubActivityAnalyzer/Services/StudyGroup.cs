@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kysect.GithubActivityAnalyzer.Group
+namespace Kysect.GithubActivityAnalyzer.Services
 {
    public class StudyGroup
    {
