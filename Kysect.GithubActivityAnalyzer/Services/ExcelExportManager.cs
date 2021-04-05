@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Packaging;
-using Kysect.GithubActivityAnalyzer.DetailedStats;
+using Kysect.GithubActivityAnalyzer.Models.Aggregations;
 
-namespace Kysect.GithubActivityAnalyzer.ExcelExport
+namespace Kysect.GithubActivityAnalyzer.Services
 {
     public class ExcelExportManager
     {
@@ -75,7 +71,7 @@ namespace Kysect.GithubActivityAnalyzer.ExcelExport
                 {
                     worksheetDetailed.Cell(1, column).Value = stat.Month;
                     worksheetDetailed.Cell(1, column).Style.DateFormat.Format = "MMMM-yyyy";
-                    int row = 2; ;
+                    int row = 2;
                     foreach (var studentResult in stat.DetailedStat)
                     {
                         worksheetDetailed.Cell(row, column).Value = studentResult.Item2;

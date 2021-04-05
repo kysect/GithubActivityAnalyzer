@@ -1,6 +1,6 @@
 ﻿
 
-namespace Kysect.GithubActivityAnalyzer.DetailedStats
+namespace Kysect.GithubActivityAnalyzer.Models.Aggregations
 {
     public class StudentInfo
     {
