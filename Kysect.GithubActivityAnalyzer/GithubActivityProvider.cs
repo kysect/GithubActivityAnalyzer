@@ -7,7 +7,7 @@ using Kysect.GithubActivityAnalyzer.Models.ApiResponses;
 
 namespace Kysect.GithubActivityAnalyzer
 {
-    public class GithubActivityProvider
+    public class GithubActivityProvider 
     {
         private const string Url = "https://github-contributions.now.sh/api/v1/";
 

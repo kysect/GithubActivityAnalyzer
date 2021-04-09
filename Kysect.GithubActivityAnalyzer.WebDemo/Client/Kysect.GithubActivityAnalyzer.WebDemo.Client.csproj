@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Kysect.GithubActivityAnalyzer\Kysect.GithubActivityAnalyzer.csproj" />
     <ProjectReference Include="..\Shared\Kysect.GithubActivityAnalyzer.WebDemo.Shared.csproj" />
   </ItemGroup>
 
