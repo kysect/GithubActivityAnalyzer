@@ -26,39 +26,36 @@ namespace Kysect.GithubActivityAnalyzer.Services
 
         private int TotalActivity()
         {
-            return Students.AsParallel()
+            return Students
                 .Select(k => k.TotalContributions)
                 .Sum();
         }
 
-        public void AddStudents( GithubActivityProvider provider, params string[] usernames)
+        public void AddStudents( GithubActivityProvider provider, bool isParallel, params string[] usernames)
         {
-            (from user in usernames.AsParallel()
-                          select new Student(user, provider))
-                         .ForAll(Students.Add);
+            var listInfo = provider.GetStudentListInfo(usernames, isParallel);
+            foreach (var item in listInfo)
+            {
+                Students.Add(item);
+            }
         }
         
         public Student GetMinValueStudent(DateTime? from = null, DateTime? to = null)
         {
-           
-
             from = from ?? DateTime.MinValue;
             to = to ?? DateTime.Now;
 
             return Students
-                .AsParallel()
                 .OrderBy(k => k.ActivityInfo.GetActivityForPeriod(from.GetValueOrDefault(), to.GetValueOrDefault()))
                 .Last();
 
         }
         public Student GetMaxValueStudent(DateTime? from = null, DateTime? to = null)
         {
-           
             from = from ?? DateTime.MinValue;
             to = to ?? DateTime.Now;
 
             return Students
-                .AsParallel()
                 .OrderBy(k => k.ActivityInfo.GetActivityForPeriod(from.GetValueOrDefault(), to.GetValueOrDefault()))
                 .First();
 
@@ -69,7 +66,6 @@ namespace Kysect.GithubActivityAnalyzer.Services
             to = to ?? DateTime.Now;
             
             return Students
-                .AsParallel()
                 .Select(k => k.ActivityInfo.GetActivityForPeriod(from.GetValueOrDefault(), to.GetValueOrDefault()))
                 .Average();
         }
@@ -78,18 +74,15 @@ namespace Kysect.GithubActivityAnalyzer.Services
         {
             Dictionary<string, int> usersContributions = new Dictionary<string, int>();
 
-            Parallel.ForEach(Students, student =>
+            foreach (var student in Students)
             {
                 usersContributions.Add(student.Username, student.TotalContributions);
-            });
+            }
             return usersContributions;
         }
-
-
         public int GetActivityForPeriod(DateTime from, DateTime to)
         { 
             return Students
-                .AsParallel()
                 .Select(student => student.ActivityInfo.GetActivityForPeriod(@from, to))
                 .Sum();
         }
@@ -97,7 +90,6 @@ namespace Kysect.GithubActivityAnalyzer.Services
         public double GetAverageMonthActivity()
         {
             return Students
-                .AsParallel()
                 .Select(student => Convert.ToInt32(student.ActivityInfo.PerMonthActivity()
                     .Average(c => c.Count)))
                 .ToList()
@@ -107,7 +99,6 @@ namespace Kysect.GithubActivityAnalyzer.Services
         public double GetMovingAverage(DateTime from, DateTime to)
         {
             return Students
-                .AsParallel()
                 .Select(s => s.GetMovingAverage(from, to))
                 .Average();
         }
