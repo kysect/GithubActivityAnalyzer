@@ -35,5 +35,20 @@ namespace Kysect.GithubActivityAnalyzer.Services
             activityInfo.Contributions = activityInfo.Contributions.Where(element => element.Date <= to && element.Date >= from).ToArray();
             return activityInfo;
         }
+        public IEnumerable<Student> GetStudentListInfo(string[] usernames, bool isParallel)
+        {
+            if (isParallel)
+            {
+                var result = from user in usernames.AsParallel()
+                             select new Student(user, this);
+                return result;
+            }
+            else
+            {
+                var result = from user in usernames
+                             select new Student(user, this);
+                return result;
+            }
+        }
     }
 }
