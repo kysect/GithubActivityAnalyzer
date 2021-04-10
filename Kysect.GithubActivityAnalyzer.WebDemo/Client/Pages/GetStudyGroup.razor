@@ -1,0 +1,89 @@
+﻿@page "/getstudyGroup"
+@inject HttpClient Http
+<h1>TestFunc</h1>
+<p>
+    <input @bind="GroupName" @bind:event="oninput" />
+</p>
+<p>
+    <input @bind="Username" @bind:event="oninput" />
+</p>
+    <button class="btn btn-primary" @onclick="AddStudent">Add student</button>
+<p>
+    <button class="btn btn-primary" @onclick="GetStat">Get Stat</button>
+</p>
+@if (GroupName == null && !StatsIsVisible)
+{
+    <p><em>Please write group name</em></p>
+}
+else
+{
+    <p>Group name: @GroupName </p>
+}
+@if (Contributions == 0 && StatsIsVisible)
+{
+    <p>Please wait...</p>
+}
+else
+{
+    <p>All Contributions: @Contributions</p>
+}
+@if (Usernames.Count == 0 && !StatsIsVisible)
+{
+    <p>Add names</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr><th>Имя</th></tr>
+        </thead>
+        <tbody>
+            @for(int i = 1; i<Usernames.Count; i++)
+            {
+                <tr><td>@Usernames[i]</td></tr>
+            }
+        </tbody>
+    </table>
+}
+@if (StatsIsVisible)
+{
+    <table class="table">
+        <thead>
+        <tr><th>Username</th><th>Contributions:</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var person in gGroup.Students)
+            {
+                <tr><td>@person.Username</td><td>@person.ActivityInfo.Total</td></tr>
+
+            }
+        </tbody>
+    </table>
+
+}
+
+@code {
+    private string Username { get; set; } = String.Empty;
+    private string GroupName { get; set; } = String.Empty;
+    private List<string> Usernames { get; set; } = new List<string>();
+    private Services.StudyGroup gGroup = new Services.StudyGroup();
+    private int Contributions { get; set; } = 0;
+    private bool StatsIsVisible { get; set; } = false;
+
+
+    protected async Task GetStat()
+    {
+        Usernames.Add(GroupName);
+        Usernames.Reverse();
+        List<string> input = Usernames;
+        var response = await Http.PostAsJsonAsync("StudyGroup", input.ToArray());
+        gGroup = response.Content.ReadFromJsonAsync<Services.StudyGroup>().Result;
+        Contributions = gGroup.TotalContributions;
+        StatsIsVisible = true;
+    }
+
+    private void AddStudent()
+    {
+        Usernames.Add(Username);
+    }
+}

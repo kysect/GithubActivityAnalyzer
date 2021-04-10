@@ -7,13 +7,13 @@ namespace Kysect.GithubActivityAnalyzer.Models.Aggregations
 {
     public class MonthlyStatistics
     {
-        public DateTime Month { get; }
-        public List<(Student, int)> DetailedStat { get; }
-        public (Student, int) MinValueStudent { get; }
-        public (Student, int) MaxValueStudent { get; }
-        public double AverageValue { get; }
-        public int TotalContributions { get; }
-       
+        public DateTime Month { get; set; }
+        public List<(Student, int)> DetailedStat { get; set; }
+        public (Student, int) MinValueStudent { get; set; }
+        public (Student, int) MaxValueStudent { get; set; }
+        public double AverageValue { get; set; }
+        public int TotalContributions { get; set; }
+
 
         public MonthlyStatistics(DateTime date, List<(Student, int)> detailedStat)
         {
@@ -31,6 +31,10 @@ namespace Kysect.GithubActivityAnalyzer.Models.Aggregations
             AverageValue = DetailedStat.Average(a => a.Item2);
 
             TotalContributions = DetailedStat.Sum(a => a.Item2);
+        }
+
+        public MonthlyStatistics()
+        {
         }
     }
 }

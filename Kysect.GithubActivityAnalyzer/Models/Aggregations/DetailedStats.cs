@@ -9,7 +9,7 @@ namespace Kysect.GithubActivityAnalyzer.Models.Aggregations
     
    public class DetailedStats
    {
-       public Dictionary<string, StudyGroup> Groups { get; }
+       public Dictionary<string, StudyGroup> Groups { get; set; }
 
        public DetailedStats(List<StudentInfo> studentInfos, GithubActivityProvider provider)
        {

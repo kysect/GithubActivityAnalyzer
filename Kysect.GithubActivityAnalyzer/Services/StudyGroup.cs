@@ -11,7 +11,9 @@ namespace Kysect.GithubActivityAnalyzer.Services
         public List<Student> Students { get; set; }
 
         public int TotalContributions => TotalActivity();
-
+        public StudyGroup()
+        {
+        }
         public StudyGroup(string groupName)
         {
             GroupName = groupName;
@@ -31,7 +33,7 @@ namespace Kysect.GithubActivityAnalyzer.Services
                 .Sum();
         }
 
-        public void AddStudents( GithubActivityProvider provider, params string[] username)
+        public void AddStudents( GithubActivityProvider provider, string[] username)
         {
             for (int i = 0; i < username.Length; i++)
             {

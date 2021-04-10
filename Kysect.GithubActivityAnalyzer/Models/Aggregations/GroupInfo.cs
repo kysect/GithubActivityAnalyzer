@@ -13,5 +13,9 @@ namespace Kysect.GithubActivityAnalyzer.Models.Aggregations
             Group = group;
             Statistics = statisticsList;
         }
+
+        public GroupInfo()
+        {
+        }
     }
 }

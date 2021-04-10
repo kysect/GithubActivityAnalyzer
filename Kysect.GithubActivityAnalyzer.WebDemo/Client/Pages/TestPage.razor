@@ -1,14 +1,8 @@
 ﻿@page "/testpage"
-@using Kysect.GithubActivityAnalyzer.WebDemo.Shared
-@using Kysect.GithubActivityAnalyzer
 @using Kysect.GithubActivityAnalyzer.Models.ApiResponses
-@using System.Net.Http
 @using System.Text.Json
-@using System.Threading
-@using System.Net
 @inject HttpClient Http
 <h1>TestFunc</h1>
-
 <p>
     <input @bind="SetName" @bind:event="oninput" />
 </p>
@@ -34,14 +28,12 @@ else
     private string SetName { get; set; } = String.Empty;
     private ActivityInfo Info { get; set; }
     private int Contributions { get; set; } = 0;
-    private string SomeResponse { get; set; }
+
 
 
     protected async Task CreateClient()
     {
         var response = await Http.GetStringAsync($"GitHubApi?username={SetName}");
-        Thread.Sleep(600);
-        SomeResponse = response;
         Info = JsonSerializer.Deserialize<ActivityInfo>(response);
         Contributions = Info.Total;
     }
