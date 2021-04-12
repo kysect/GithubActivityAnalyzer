@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -6,9 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Kysect.GithubActivityAnalyzer\Kysect.GithubActivityAnalyzer.csproj" />
     <ProjectReference Include="..\Client\Kysect.GithubActivityAnalyzer.WebDemo.Client.csproj" />
     <ProjectReference Include="..\Shared\Kysect.GithubActivityAnalyzer.WebDemo.Shared.csproj" />
   </ItemGroup>
