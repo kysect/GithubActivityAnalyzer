@@ -11,7 +11,9 @@ namespace Kysect.GithubActivityAnalyzer.Services
         public List<Student> Students { get; set; }
 
         public int TotalContributions => TotalActivity();
-
+        public StudyGroup()
+        {
+        }
         public StudyGroup(string groupName)
         {
             GroupName = groupName;

@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kysect.GithubActivityAnalyz
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kysect.GithubActivityAnalyzer.Sample", "Kysect.GithubActivityAnalyzer.Sample\Kysect.GithubActivityAnalyzer.Sample.csproj", "{E65B04BA-3E40-4A0A-977E-7D448E4E7830}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kysect.GithubActivityAnalyzer.WebDemo.Server", "Kysect.GithubActivityAnalyzer.WebDemo\Server\Kysect.GithubActivityAnalyzer.WebDemo.Server.csproj", "{E6B77BD4-DA50-4788-BA9E-44EDC22A83B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kysect.GithubActivityAnalyzer.WebDemo.Server", "Kysect.GithubActivityAnalyzer.WebDemo\Server\Kysect.GithubActivityAnalyzer.WebDemo.Server.csproj", "{E6B77BD4-DA50-4788-BA9E-44EDC22A83B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kysect.GithubActivityAnalyzer.WebDemo.Client", "Kysect.GithubActivityAnalyzer.WebDemo\Client\Kysect.GithubActivityAnalyzer.WebDemo.Client.csproj", "{8A1D5273-B4D8-4253-8B64-2D404A9D8DAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kysect.GithubActivityAnalyzer.WebDemo.Client", "Kysect.GithubActivityAnalyzer.WebDemo\Client\Kysect.GithubActivityAnalyzer.WebDemo.Client.csproj", "{8A1D5273-B4D8-4253-8B64-2D404A9D8DAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kysect.GithubActivityAnalyzer.WebDemo.Shared", "Kysect.GithubActivityAnalyzer.WebDemo\Shared\Kysect.GithubActivityAnalyzer.WebDemo.Shared.csproj", "{FA126478-7E0D-442A-B91C-D709FE1D385A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kysect.GithubActivityAnalyzer.WebDemo.Shared", "Kysect.GithubActivityAnalyzer.WebDemo\Shared\Kysect.GithubActivityAnalyzer.WebDemo.Shared.csproj", "{FA126478-7E0D-442A-B91C-D709FE1D385A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebDemo", "WebDemo", "{6A4F3831-1452-42B5-8CFC-6B304E8B564F}"
 EndProject
