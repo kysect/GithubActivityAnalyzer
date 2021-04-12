@@ -11,9 +11,9 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Controllers
         private GithubActivityProvider provider = new GithubActivityProvider();
 
         [HttpGet]
-        public ActionResult<string> Get(string username)
+        public ActivityInfo Get(string username)
         {
-            return JsonSerializer.Serialize(provider.GetActivityInfo(username).Result);
+            return provider.GetActivityInfo(username).Result;
         }
     }
 }

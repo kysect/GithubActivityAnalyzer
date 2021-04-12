@@ -15,26 +15,23 @@ else
 {
     <p>Name: @SetName </p>
 }
-@if (Contributions == 0)
+@if (Info == null)
 {
     <p>Please wait...</p>
 }
 else
 {
-    <p>Contributions: @Contributions</p>
+    <p>Contributions: @Info.Total</p>
 }
 
 @code {
     private string SetName { get; set; } = String.Empty;
     private ActivityInfo Info { get; set; }
-    private int Contributions { get; set; } = 0;
 
 
 
     protected async Task CreateClient()
     {
-        var response = await Http.GetStringAsync($"GitHubApi?username={SetName}");
-        Info = JsonSerializer.Deserialize<ActivityInfo>(response);
-        Contributions = Info.Total;
+        Info = await Http.GetFromJsonAsync<ActivityInfo>($"GitHubApi?username={SetName}");
     }
 }
