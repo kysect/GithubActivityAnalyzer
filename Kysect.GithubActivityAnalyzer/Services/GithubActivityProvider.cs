@@ -39,16 +39,9 @@ namespace Kysect.GithubActivityAnalyzer.Services
         {
             if (isParallel)
             {
-                var result = from user in usernames.AsParallel()
-                             select new Student(user, this);
-                return result;
+                return usernames.AsParallel().Select(user => new Student(user, this));
             }
-            else
-            {
-                var result = from user in usernames
-                             select new Student(user, this);
-                return result;
-            }
+            return usernames.Select(user => new Student(user, this));
         }
     }
 }
