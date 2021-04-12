@@ -8,7 +8,7 @@
 <p>
     <input @bind="Username" @bind:event="oninput" />
 </p>
-    <button class="btn btn-primary" @onclick="AddStudent">Add student</button>
+<button class="btn btn-primary" @onclick="AddStudent">Add student</button>
 <p>
     <button class="btn btn-primary" @onclick="GetStat">Get Stat</button>
 </p>
@@ -19,14 +19,6 @@
 else
 {
     <p>Group name: @GroupName </p>
-}
-@if (Contributions == 0 && StatsIsVisible)
-{
-    <p>Please wait...</p>
-}
-else
-{
-    <p>All Contributions: @Contributions</p>
 }
 @if (Usernames.Count == 0 && !StatsIsVisible)
 {
@@ -39,7 +31,7 @@ else
             <tr><th>Имя</th></tr>
         </thead>
         <tbody>
-            @for(int i = 0; i<Usernames.Count; i++)
+            @for (int i = 0; i < Usernames.Count; i++)
             {
                 <tr><td>@Usernames[i]</td></tr>
             }
@@ -48,12 +40,13 @@ else
 }
 @if (StatsIsVisible)
 {
+    <p>All Contributions: @_studyGroup.TotalContributions</p>
     <table class="table">
         <thead>
-        <tr><th>Username</th><th>Contributions:</th></tr>
+            <tr><th>Username</th><th>Contributions:</th></tr>
         </thead>
         <tbody>
-            @foreach (var person in gGroup.Students)
+            @foreach (var person in _studyGroup.Students)
             {
                 <tr><td>@person.Username</td><td>@person.ActivityInfo.Total</td></tr>
 
@@ -66,21 +59,20 @@ else
 @code {
     private string Username { get; set; } = String.Empty;
     private string GroupName { get; set; } = String.Empty;
-    private ControllerGroupInfo newGroupInfo = new ControllerGroupInfo();
     private List<string> Usernames { get; set; } = new List<string>();
-    private Services.StudyGroup gGroup = new Services.StudyGroup();
-    private int Contributions { get; set; } = 0;
+    private Services.StudyGroup _studyGroup;
     private bool StatsIsVisible { get; set; } = false;
 
 
     protected async Task GetStat()
     {
-        newGroupInfo.GroupName = GroupName;
-        newGroupInfo.usernames = Usernames;
-        List<string> input = Usernames;
+        GroupStatRequest newGroupInfo = new GroupStatRequest()
+        {
+            GroupName = GroupName,
+            usernames = Usernames
+        };
         var response = await Http.PostAsJsonAsync("StudyGroup", newGroupInfo);
-        gGroup = response.Content.ReadFromJsonAsync<Services.StudyGroup>().Result;
-        Contributions = gGroup.TotalContributions;
+        _studyGroup = await response.Content.ReadFromJsonAsync<Services.StudyGroup>();
         StatsIsVisible = true;
     }
 

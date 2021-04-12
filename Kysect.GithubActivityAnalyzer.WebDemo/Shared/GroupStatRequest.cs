@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Shared
 {
-   public class ControllerGroupInfo
+   public class GroupStatRequest
     {
         public string GroupName { get; set; }
         public List<string> usernames { get; set; }
 
-        public ControllerGroupInfo()
+        public GroupStatRequest()
         { }
     }
 }
