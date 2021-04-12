@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Kysect.GithubActivityAnalyzer.Models.ApiResponses;
 
-namespace Kysect.GithubActivityAnalyzer
+namespace Kysect.GithubActivityAnalyzer.Services
 {
     public class GithubActivityProvider
     {
@@ -33,6 +34,14 @@ namespace Kysect.GithubActivityAnalyzer
             var activityInfo = JsonSerializer.Deserialize<ActivityInfo>(response, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             activityInfo.Contributions = activityInfo.Contributions.Where(element => element.Date <= to && element.Date >= from).ToArray();
             return activityInfo;
+        }
+        public List<Student> GetStudentListInfo(string[] usernames, bool isParallel)
+        {
+            if (isParallel)
+            {
+                return usernames.AsParallel().Select(user => new Student(user, this)).ToList();
+            }
+            return usernames.Select(user => new Student(user, this)).ToList();
         }
     }
 }

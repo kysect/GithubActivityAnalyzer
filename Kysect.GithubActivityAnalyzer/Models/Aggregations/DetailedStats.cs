@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Kysect.GithubActivityAnalyzer.Models.ApiResponses;
 using Kysect.GithubActivityAnalyzer.Services;
 
 namespace Kysect.GithubActivityAnalyzer.Models.Aggregations
