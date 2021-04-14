@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using Kysect.GithubActivityAnalyzer.Models.Aggregations;
 using Kysect.GithubActivityAnalyzer.Services;
 using Kysect.GithubActivityAnalyzer.WebDemo.Shared;
 
@@ -12,14 +13,9 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Controllers
         private GithubActivityProvider _provider = new GithubActivityProvider();
 
         [HttpPost]
-        public StudyGroup GetStudyGroup(GroupStatRequest info)
+        public StudyGroupResponse GetStudyGroup(GroupStatRequest info)
         {
-            StudyGroup newGroup = new StudyGroup(info.GroupName);
-            for (int i = 0; i < info.usernames.Count; i++)
-            {
-                newGroup.Students.Add(new Student(info.usernames[i], _provider));
-            }
-            return newGroup;
+            return new StudyGroupResponse(new StudyGroup(info.GroupName, info.usernames, _provider)); 
         }
     }
 }
