@@ -1,5 +1,6 @@
 ﻿@page "/getstudyGroup"
 @using Kysect.GithubActivityAnalyzer.WebDemo.Shared
+@using Kysect.GithubActivityAnalyzer.Models.Aggregations
 @inject HttpClient Http
 <h1>TestFunc</h1>
 <p>
@@ -48,7 +49,7 @@ else
         <tbody>
             @foreach (var person in _studyGroup.Students)
             {
-                <tr><td>@person.Username</td><td>@person.ActivityInfo.Total</td></tr>
+                <tr><td>@person.Username</td><td>@person.TotalContributions</td></tr>
 
             }
         </tbody>
@@ -60,7 +61,7 @@ else
     private string Username { get; set; } = String.Empty;
     private string GroupName { get; set; } = String.Empty;
     private List<string> Usernames { get; set; } = new List<string>();
-    private Services.StudyGroup _studyGroup;
+    private StudyGroupResponse _studyGroup;
     private bool StatsIsVisible { get; set; } = false;
 
 
@@ -72,7 +73,7 @@ else
             usernames = Usernames
         };
         var response = await Http.PostAsJsonAsync("StudyGroup", newGroupInfo);
-        _studyGroup = await response.Content.ReadFromJsonAsync<Services.StudyGroup>();
+        _studyGroup = await response.Content.ReadFromJsonAsync<StudyGroupResponse>();
         StatsIsVisible = true;
     }
 
