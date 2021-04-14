@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+
+using Kysect.GithubActivityAnalyzer.Models.Aggregations;
 
 namespace Kysect.GithubActivityAnalyzer.Services
 {
-   public class StudyGroup
-   {
+    public class StudyGroup
+    {
         public string GroupName { get; set; }
         public List<Student> Students { get; set; }
+        public List<MonthlyStatistics> Statistics { get; set; }
 
         public int TotalContributions => TotalActivity();
         public StudyGroup()
@@ -18,12 +20,25 @@ namespace Kysect.GithubActivityAnalyzer.Services
         {
             GroupName = groupName;
             Students = new List<Student>();
+            Statistics = GetDetailedStat();
         }
 
         public StudyGroup(string groupName, List<Student> students)
         {
             GroupName = groupName;
             Students = students;
+        }
+
+        public StudyGroup(string groupName, List<string> students, GithubActivityProvider provider)
+        {
+            GroupName = groupName;
+            Students = new List<Student>();
+            foreach (var student in students)
+            {
+                Students.Add(new Student(student,provider));
+            }
+
+            Statistics = GetDetailedStat();
         }
 
         private int TotalActivity()
@@ -33,7 +48,7 @@ namespace Kysect.GithubActivityAnalyzer.Services
                 .Sum();
         }
 
-        public void AddStudents( GithubActivityProvider provider, bool isParallel, params string[] usernames)
+        public void AddStudents(GithubActivityProvider provider, bool isParallel, params string[] usernames)
         {
             var listInfo = provider.GetStudentListInfo(usernames, isParallel);
             foreach (var item in listInfo)
@@ -41,7 +56,7 @@ namespace Kysect.GithubActivityAnalyzer.Services
                 Students.Add(item);
             }
         }
-        
+
         public Student GetMinValueStudent(DateTime? from = null, DateTime? to = null)
         {
             from ??= DateTime.MinValue;
@@ -66,7 +81,7 @@ namespace Kysect.GithubActivityAnalyzer.Services
         {
             from ??= DateTime.MinValue;
             to ??= DateTime.Now;
-            
+
             return Students
                 .Select(k => k.ActivityInfo.GetActivityForPeriod(from.GetValueOrDefault(), to.GetValueOrDefault()))
                 .Average();
@@ -83,7 +98,7 @@ namespace Kysect.GithubActivityAnalyzer.Services
             return usersContributions;
         }
         public int GetActivityForPeriod(DateTime from, DateTime to)
-        { 
+        {
             return Students
                 .Select(student => student.ActivityInfo.GetActivityForPeriod(@from, to))
                 .Sum();
@@ -104,5 +119,22 @@ namespace Kysect.GithubActivityAnalyzer.Services
                 .Select(s => s.GetMovingAverage(from, to))
                 .Average();
         }
-   }
+
+        public List<MonthlyStatistics> GetDetailedStat(DateTime? fromDate = null, DateTime? endTime = null)
+        {
+            Statistics = new List<MonthlyStatistics>();
+            DateTime from = fromDate ?? new DateTime(2020, 09, 01);
+            endTime = endTime ?? DateTime.Now;
+            for (DateTime to = from.AddMonths(1); from <= endTime || from.Month == endTime.Value.Month; to = from.AddMonths(1))
+            {
+                var detailedStat = this.Students
+                    .Select(student => (student.Username, student.GetActivityForPeriod(from, to)))
+                    .ToList();
+                var monthStat = new MonthlyStatistics(from, detailedStat);
+                Statistics.Add(monthStat);
+                from = to;
+            }
+            return Statistics;
+        }
+    }
 }
