@@ -8,14 +8,14 @@ namespace Kysect.GithubActivityAnalyzer.Models.Aggregations
     public class MonthlyStatistics
     {
         public DateTime Month { get; set; }
-        public List<(Student, int)> DetailedStat { get; set; }
-        public (Student, int) MinValueStudent { get; set; }
-        public (Student, int) MaxValueStudent { get; set; }
+        public List<(string, int)> DetailedStat { get; set; }
+        public (string, int) MinValueStudent { get; set; }
+        public (string, int) MaxValueStudent { get; set; }
         public double AverageValue { get; set; }
         public int TotalContributions { get; set; }
 
 
-        public MonthlyStatistics(DateTime date, List<(Student, int)> detailedStat)
+        public MonthlyStatistics(DateTime date, List<(string, int)> detailedStat)
         {
             DetailedStat = detailedStat;
             Month = date;

@@ -12,7 +12,7 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Controllers
         private GithubActivityProvider _provider = new GithubActivityProvider();
 
         [HttpPost]
-        public StudyGroup Get(GroupStatRequest info)
+        public StudyGroup GetStudyGroup(GroupStatRequest info)
         {
             StudyGroup newGroup = new StudyGroup(info.GroupName);
             for (int i = 0; i < info.usernames.Count; i++)
