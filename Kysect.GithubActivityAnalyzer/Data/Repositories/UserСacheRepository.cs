@@ -1,12 +1,12 @@
 ﻿using System.Linq;
 using System.Text.Json;
+using Kysect.GithubActivityAnalyzer.Data.Entities;
 using Kysect.GithubActivityAnalyzer.Models.ApiResponses;
-using Kysect.GithubActivityAnalyzer.ResultCache.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kysect.GithubActivityAnalyzer.ResultCache.Repositories
+namespace Kysect.GithubActivityAnalyzer.Data.Repositories
 {
-    public class UserСacheRepository
+    public class UserСacheRepository : IRepository<UserСache>
     {
         readonly DbContext _context;
         readonly DbSet<UserСache> _dbSet;
@@ -32,6 +32,10 @@ namespace Kysect.GithubActivityAnalyzer.ResultCache.Repositories
             _dbSet.Add(item);
             _context.SaveChanges();
             return item;
+        }
+        public IQueryable<UserСache> Get()
+        {
+            return _dbSet;
         }
         public void Update(UserСache item)
         {
@@ -59,5 +63,6 @@ namespace Kysect.GithubActivityAnalyzer.ResultCache.Repositories
             var activity = JsonSerializer.Deserialize<ActivityInfo>(userCash.ActivityInfo, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             return activity;
         }
+
     }
 }
