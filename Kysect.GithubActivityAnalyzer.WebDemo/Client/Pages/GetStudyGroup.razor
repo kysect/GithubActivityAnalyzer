@@ -47,9 +47,9 @@ else
             <tr><th>Username</th><th>Contributions:</th></tr>
         </thead>
         <tbody>
-            @foreach (var person in _studyGroup.Students)
+            @foreach (var person in _studyGroup.DetailedStatisticsList[0].DetailedStat)
             {
-                <tr><td>@person.Username</td><td>@person.TotalContributions</td></tr>
+                <tr><td>@person.Username</td><td>@person.MonthlyContributions</td></tr>
 
             }
         </tbody>
