@@ -128,7 +128,7 @@ namespace Kysect.GithubActivityAnalyzer.Services
             for (DateTime to = from.AddMonths(1); from <= endTime || from.Month == endTime.Value.Month; to = from.AddMonths(1))
             {
                 var detailedStat = this.Students
-                    .Select(student => (student.Username, student.GetActivityForPeriod(from, to)))
+                    .Select(student => new StudentMonthlyActivity(student.Username, student.GetActivityForPeriod(from, to)))
                     .ToList();
                 var monthStat = new MonthlyStatistics(from, detailedStat);
                 Statistics.Add(monthStat);

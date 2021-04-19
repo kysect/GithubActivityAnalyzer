@@ -30,9 +30,7 @@ namespace Kysect.GithubActivityAnalyzer.Models.Aggregations
 
         public int TotalContributions { get; set; }
 
-        public ShortStudentInfo()
-        {
-        } 
+        public ShortStudentInfo() { } 
         public ShortStudentInfo(string name, int totalContributions)
         {
             Username = name;
