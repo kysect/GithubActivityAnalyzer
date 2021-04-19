@@ -19,7 +19,7 @@ namespace Kysect.GithubActivityAnalyzer.Models.Aggregations
         {
             GroupName = group.GroupName;
             TotalContributions = group.TotalContributions;
-            Students = group.Students.Select(a => new ShortStudentInfo(a.Username,a.TotalContributions)).ToList();
+            Students = group.Students.Select(a => new ShortStudentInfo(a.Username, a.TotalContributions)).ToList();
             DetailedStatisticsList = group.Statistics;
         }
     }
