@@ -6,15 +6,15 @@ namespace Kysect.GithubActivityAnalyzer.Services
 {
     public class ExcelExportManager
     {
-        public List<GroupInfo> Info { get; set; }
+        public List<StudyGroup> Info { get; set; }
         private IXLWorkbook Workbook { get; }
 
-        public ExcelExportManager(List<GroupInfo> info)
+        public ExcelExportManager(List<StudyGroup> info)
         {
             Info = info;
             Workbook = new XLWorkbook();
         }
-        public ExcelExportManager(List<GroupInfo> info, IXLWorkbook workbook)
+        public ExcelExportManager(List<StudyGroup> info, IXLWorkbook workbook)
         {
             Info = info;
             Workbook = workbook;
@@ -29,7 +29,7 @@ namespace Kysect.GithubActivityAnalyzer.Services
         {
             foreach (var groupInfo in Info)
             {
-                IXLWorksheet worksheet = Workbook.Worksheets.Add($"{groupInfo.Group.GroupName}");
+                IXLWorksheet worksheet = Workbook.Worksheets.Add($"{groupInfo.GroupName}");
                 worksheet.Cell(2, 1).Value = "Среднее количество коммитов за месяц:";
                 worksheet.Cell(3, 1).Value = "Всего коммитов за месяц:";
                 worksheet.Cell(4, 1).Value = "Котик месяца:";
@@ -42,9 +42,9 @@ namespace Kysect.GithubActivityAnalyzer.Services
                     worksheet.Cell(2, column).Value = groupInfo.Statistics[column - 2].AverageValue;
                     worksheet.Cell(3, column).Value = groupInfo.Statistics[column - 2].TotalContributions;
                     worksheet.Cell(4, column).Value =
-                        groupInfo.Statistics[column-2].MaxValueStudent.Item1.Username + ":" + groupInfo.Statistics[column - 2].MaxValueStudent.Item2;
+                        groupInfo.Statistics[column-2].MaxValueStudent.Username + ":" + groupInfo.Statistics[column - 2].MaxValueStudent.MonthlyContributions;
                     worksheet.Cell(5, column).Value =
-                        groupInfo.Statistics[column - 2].MinValueStudent.Item1.Username + ":" + groupInfo.Statistics[column - 2].MinValueStudent.Item2;
+                        groupInfo.Statistics[column - 2].MinValueStudent.Username + ":" + groupInfo.Statistics[column - 2].MinValueStudent.MonthlyContributions;
                 }
                 worksheet.Columns().AdjustToContents();
                 worksheet.Rows().AdjustToContents();
@@ -56,11 +56,11 @@ namespace Kysect.GithubActivityAnalyzer.Services
         {
             foreach (var info in Info)
             {
-                IXLWorksheet worksheetDetailed = Workbook.Worksheets.Add($"{info.Group.GroupName}-DetailedStat");
+                IXLWorksheet worksheetDetailed = Workbook.Worksheets.Add($"{info.GroupName}-DetailedStat");
 
-                for (int row = 2; row < info.Group.Students.Count + 2; row++)
+                for (int row = 2; row < info.Students.Count + 2; row++)
                 {
-                    worksheetDetailed.Cell(row, 1).Value = info.Group.Students[row - 2].Username;
+                    worksheetDetailed.Cell(row, 1).Value = info.Students[row - 2].Username;
                 }
                 int column = 2;
 
@@ -74,7 +74,7 @@ namespace Kysect.GithubActivityAnalyzer.Services
                     int row = 2;
                     foreach (var studentResult in stat.DetailedStat)
                     {
-                        worksheetDetailed.Cell(row, column).Value = studentResult.Item2;
+                        worksheetDetailed.Cell(row, column).Value = studentResult.MonthlyContributions;
                         lastRow = row;
                         row++;
                     }
