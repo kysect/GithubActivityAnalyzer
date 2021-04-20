@@ -40,6 +40,14 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
             }
         }
 
+        public static List<StudyGroup> CreateFromUserList(List<UserWithTag> users, GithubActivityProvider provider)
+        {
+            return users
+                .ToLookup(user => user.Tag, user => user.Username)
+                .Select(group => new StudyGroup(@group.Key, @group.ToList(), provider))
+                .ToList();
+        }
+
         private int TotalActivity()
         {
             return Students
