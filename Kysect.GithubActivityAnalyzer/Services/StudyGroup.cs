@@ -50,10 +50,10 @@ namespace Kysect.GithubActivityAnalyzer.Services
 
         public void AddStudents(GithubActivityProvider provider, bool isParallel, params string[] usernames)
         {
-            var listInfo = provider.GetStudentListInfo(usernames, isParallel);
+            var listInfo = provider.GetActivityInfo(usernames, isParallel);
             foreach (var item in listInfo)
             {
-                Students.Add(item);
+                Students.Add(new Student(item.Username, item.Activity));
             }
         }
 
