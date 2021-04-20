@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Kysect.GithubActivityAnalyzer.Models.Aggregations;
-using Kysect.GithubActivityAnalyzer.Services;
+using Kysect.GithubActivityAnalyzer.ApiAccessor;
 using Kysect.GithubActivityAnalyzer.WebDemo.Shared;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Controllers

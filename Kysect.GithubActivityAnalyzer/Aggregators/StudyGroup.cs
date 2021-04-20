@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Kysect.GithubActivityAnalyzer.Aggregators.Models;
+using Kysect.GithubActivityAnalyzer.ApiAccessor;
 
-using Kysect.GithubActivityAnalyzer.Models.Aggregations;
-
-namespace Kysect.GithubActivityAnalyzer.Services
+namespace Kysect.GithubActivityAnalyzer.Aggregators
 {
     public class StudyGroup
     {

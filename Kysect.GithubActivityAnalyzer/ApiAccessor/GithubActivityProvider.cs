@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Kysect.GithubActivityAnalyzer.Models.ApiResponses;
+using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
 
-namespace Kysect.GithubActivityAnalyzer.Services
+namespace Kysect.GithubActivityAnalyzer.ApiAccessor
 {
     public class GithubActivityProvider
     {
