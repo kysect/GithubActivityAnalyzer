@@ -11,7 +11,7 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
     {
         public string GroupName { get; set; }
         public List<Student> Students { get; set; }
-        public List<MonthlyStatistics> Statistics { get; set; }
+        public List<MonthlyStatistics> Statistics => GetDetailedStat();
         public int TotalContributions => TotalActivity();
 
         public StudyGroup()
@@ -22,7 +22,6 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
         {
             GroupName = groupName;
             Students = new List<Student>();
-            Statistics = new List<MonthlyStatistics>();
         }
 
         public StudyGroup(string groupName, List<Student> students)
@@ -34,12 +33,11 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
         public StudyGroup(string groupName, List<string> students, GithubActivityProvider provider)
         {
             GroupName = groupName;
+            Students = new List<Student>();
             foreach ((string username, ActivityInfo activity) in provider.GetActivityInfo(students, true))
             {
                 Students.Add(new Student(username, activity));
             }
-
-            Statistics = GetDetailedStat();
         }
 
         private int TotalActivity()
@@ -124,7 +122,7 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
 
         public List<MonthlyStatistics> GetDetailedStat(DateTime? fromDate = null, DateTime? endTime = null)
         {
-            Statistics = new List<MonthlyStatistics>();
+            var statistics = new List<MonthlyStatistics>();
             //TODO: fix
             DateTime from = fromDate ?? new DateTime(2020, 09, 01);
             endTime = endTime ?? DateTime.Now;
@@ -134,10 +132,10 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
                     .Select(student => new StudentMonthlyActivity(student.Username, student.GetActivityForPeriod(from, to)))
                     .ToList();
                 var monthStat = new MonthlyStatistics(from, detailedStat);
-                Statistics.Add(monthStat);
+                statistics.Add(monthStat);
                 from = to;
             }
-            return Statistics;
+            return statistics;
         }
     }
 }
