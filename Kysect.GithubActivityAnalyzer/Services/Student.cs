@@ -19,6 +19,13 @@ namespace Kysect.GithubActivityAnalyzer.Services
             Username = username;
             AddActivityInfo(provider);
         }
+
+        public Student(string username, ActivityInfo activityInfo)
+        {
+            Username = username;
+            ActivityInfo = activityInfo;
+        }
+
         public void AddActivityInfo(GithubActivityProvider provider)
         {
             ActivityInfo = provider.GetActivityInfo(Username).Result;

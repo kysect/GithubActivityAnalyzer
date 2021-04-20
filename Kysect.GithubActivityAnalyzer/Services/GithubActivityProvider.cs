@@ -19,29 +19,29 @@ namespace Kysect.GithubActivityAnalyzer.Services
             _client = new HttpClient();
         }
 
-        public async Task<ActivityInfo> GetActivityInfo(string username)
+        public async Task<ActivityInfo> GetActivityInfo(string username, DateTime? from = null, DateTime? to = null)
         {
             string response = await _client.GetStringAsync(Url + username);
             var activityInfo = JsonSerializer.Deserialize<ActivityInfo>(response, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-            activityInfo.Contributions = activityInfo.Contributions.Where(element => element.Date <= DateTime.Now).ToArray();
-            return activityInfo;
+
+            return activityInfo.FilterValues(from, to);
         }
 
-        public async Task<ActivityInfo> GetActivityInfo(string username, DateTime from, DateTime to)
+        public List<(string Username, ActivityInfo Activity)> GetActivityInfo(string[] usernames, bool isParallel, DateTime? from = null, DateTime? to = null)
         {
-            string response = await _client.GetStringAsync(Url + username);
-
-            var activityInfo = JsonSerializer.Deserialize<ActivityInfo>(response, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-            activityInfo.Contributions = activityInfo.Contributions.Where(element => element.Date <= to && element.Date >= from).ToArray();
-            return activityInfo;
-        }
-        public List<Student> GetStudentListInfo(string[] usernames, bool isParallel)
-        {
-            if (isParallel)
+            if (!isParallel)
             {
-                return usernames.AsParallel().Select(user => new Student(user, this)).ToList();
+                return usernames
+                    .Select(username => (username, GetActivityInfo(username, @from, to).Result))
+                    .ToList();
             }
-            return usernames.Select(user => new Student(user, this)).ToList();
+
+            List<(string, ActivityInfo)> result = usernames
+                .AsParallel()
+                .Select(username => (username, GetActivityInfo(username, @from, to).Result))
+                .ToList();
+
+            return result;
         }
     }
 }
