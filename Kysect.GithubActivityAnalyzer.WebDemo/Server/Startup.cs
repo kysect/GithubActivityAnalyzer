@@ -1,5 +1,3 @@
-using Kysect.GithubActivityAnalyzer.Models.ApiResponses;
-using Kysect.GithubActivityAnalyzer.Services;
 using Kysect.GithubActivityAnalyzer.WebDemo.Server.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

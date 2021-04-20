@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Text.Json;
-using Kysect.GithubActivityAnalyzer.Models.ApiResponses;
+using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
 using Kysect.GithubActivityAnalyzer.ResultCache.Entities;
 using Microsoft.EntityFrameworkCore;
 

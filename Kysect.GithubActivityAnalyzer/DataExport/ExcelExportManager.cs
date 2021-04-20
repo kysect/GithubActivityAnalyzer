@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using ClosedXML.Excel;
-using Kysect.GithubActivityAnalyzer.Models.Aggregations;
+using Kysect.GithubActivityAnalyzer.Aggregators;
 
-namespace Kysect.GithubActivityAnalyzer.Services
+namespace Kysect.GithubActivityAnalyzer.DataExport
 {
     public class ExcelExportManager
     {

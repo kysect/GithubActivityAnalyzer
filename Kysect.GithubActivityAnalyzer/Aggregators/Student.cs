@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
-using Kysect.GithubActivityAnalyzer.Models.ApiResponses;
+using Kysect.GithubActivityAnalyzer.ApiAccessor;
+using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
 
-namespace Kysect.GithubActivityAnalyzer.Services
+namespace Kysect.GithubActivityAnalyzer.Aggregators
 {
     public class Student
     {
@@ -14,6 +15,7 @@ namespace Kysect.GithubActivityAnalyzer.Services
         public Student()
         {
         }
+
         public Student(string username, GithubActivityProvider provider)
         {
             Username = username;
