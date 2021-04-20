@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Kysect.GithubActivityAnalyzer.Aggregators.Models;
 using Kysect.GithubActivityAnalyzer.ApiAccessor;
+using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
 
 namespace Kysect.GithubActivityAnalyzer.Aggregators
 {
@@ -11,16 +12,17 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
         public string GroupName { get; set; }
         public List<Student> Students { get; set; }
         public List<MonthlyStatistics> Statistics { get; set; }
-
         public int TotalContributions => TotalActivity();
+
         public StudyGroup()
         {
         }
+
         public StudyGroup(string groupName)
         {
             GroupName = groupName;
             Students = new List<Student>();
-            Statistics = GetDetailedStat();
+            Statistics = new List<MonthlyStatistics>();
         }
 
         public StudyGroup(string groupName, List<Student> students)
@@ -32,10 +34,9 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
         public StudyGroup(string groupName, List<string> students, GithubActivityProvider provider)
         {
             GroupName = groupName;
-            Students = new List<Student>();
-            foreach (var student in students)
+            foreach ((string username, ActivityInfo activity) in provider.GetActivityInfo(students, true))
             {
-                Students.Add(new Student(student,provider));
+                Students.Add(new Student(username, activity));
             }
 
             Statistics = GetDetailedStat();
@@ -97,6 +98,7 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
             }
             return usersContributions;
         }
+
         public int GetActivityForPeriod(DateTime from, DateTime to)
         {
             return Students
@@ -123,6 +125,7 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
         public List<MonthlyStatistics> GetDetailedStat(DateTime? fromDate = null, DateTime? endTime = null)
         {
             Statistics = new List<MonthlyStatistics>();
+            //TODO: fix
             DateTime from = fromDate ?? new DateTime(2020, 09, 01);
             endTime = endTime ?? DateTime.Now;
             for (DateTime to = from.AddMonths(1); from <= endTime || from.Month == endTime.Value.Month; to = from.AddMonths(1))

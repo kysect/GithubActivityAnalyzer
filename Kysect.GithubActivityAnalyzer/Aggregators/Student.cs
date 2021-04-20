@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Kysect.GithubActivityAnalyzer.ApiAccessor;
 using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
 
 namespace Kysect.GithubActivityAnalyzer.Aggregators
@@ -16,23 +15,11 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
         {
         }
 
-        public Student(string username, GithubActivityProvider provider)
-        {
-            Username = username;
-            AddActivityInfo(provider);
-        }
-
         public Student(string username, ActivityInfo activityInfo)
         {
             Username = username;
             ActivityInfo = activityInfo;
         }
-
-        public void AddActivityInfo(GithubActivityProvider provider)
-        {
-            ActivityInfo = provider.GetActivityInfo(Username).Result;
-        }
-
 
         public int GetActivityForPeriod(DateTime from, DateTime to)
         {
