@@ -27,7 +27,7 @@ namespace Kysect.GithubActivityAnalyzer.ApiAccessor
             return activityInfo.FilterValues(from, to);
         }
 
-        public List<(string Username, ActivityInfo Activity)> GetActivityInfo(string[] usernames, bool isParallel, DateTime? from = null, DateTime? to = null)
+        public List<(string Username, ActivityInfo Activity)> GetActivityInfo(IEnumerable<string> usernames, bool isParallel, DateTime? from = null, DateTime? to = null)
         {
             if (!isParallel)
             {
