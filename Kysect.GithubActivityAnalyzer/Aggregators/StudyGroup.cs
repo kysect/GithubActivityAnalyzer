@@ -1,45 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Kysect.GithubActivityAnalyzer.Aggregators.Models;
+using Kysect.GithubActivityAnalyzer.ApiAccessor;
+using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
 
-using Kysect.GithubActivityAnalyzer.Models.Aggregations;
-
-namespace Kysect.GithubActivityAnalyzer.Services
+namespace Kysect.GithubActivityAnalyzer.Aggregators
 {
     public class StudyGroup
     {
         public string GroupName { get; set; }
         public List<Student> Students { get; set; }
-        public List<MonthlyStatistics> Statistics { get; set; }
-
+        public List<MonthlyStatistics> Statistics => GetDetailedStat();
         public int TotalContributions => TotalActivity();
+
         public StudyGroup()
         {
         }
+
         public StudyGroup(string groupName)
         {
             GroupName = groupName;
             Students = new List<Student>();
-            Statistics = GetDetailedStat();
         }
 
         public StudyGroup(string groupName, List<Student> students)
         {
             GroupName = groupName;
             Students = students;
-            Statistics = GetDetailedStat();
         }
 
         public StudyGroup(string groupName, List<string> students, GithubActivityProvider provider)
         {
             GroupName = groupName;
             Students = new List<Student>();
-            foreach (var student in students)
+            foreach ((string username, ActivityInfo activity) in provider.GetActivityInfo(students, true))
             {
-                Students.Add(new Student(student,provider));
+                Students.Add(new Student(username, activity));
             }
+        }
 
-            Statistics = GetDetailedStat();
+        public static List<StudyGroup> CreateFromUserList(List<UserWithTag> users, GithubActivityProvider provider)
+        {
+            return users
+                .ToLookup(user => user.Tag, user => user.Username)
+                .Select(group => new StudyGroup(@group.Key, @group.ToList(), provider))
+                .ToList();
         }
 
         private int TotalActivity()
@@ -51,10 +57,10 @@ namespace Kysect.GithubActivityAnalyzer.Services
 
         public void AddStudents(GithubActivityProvider provider, bool isParallel, params string[] usernames)
         {
-            var listInfo = provider.GetStudentListInfo(usernames, isParallel);
+            var listInfo = provider.GetActivityInfo(usernames, isParallel);
             foreach (var item in listInfo)
             {
-                Students.Add(item);
+                Students.Add(new Student(item.Username, item.Activity));
             }
         }
 
@@ -98,6 +104,7 @@ namespace Kysect.GithubActivityAnalyzer.Services
             }
             return usersContributions;
         }
+
         public int GetActivityForPeriod(DateTime from, DateTime to)
         {
             return Students
@@ -123,7 +130,8 @@ namespace Kysect.GithubActivityAnalyzer.Services
 
         public List<MonthlyStatistics> GetDetailedStat(DateTime? fromDate = null, DateTime? endTime = null)
         {
-            Statistics = new List<MonthlyStatistics>();
+            var statistics = new List<MonthlyStatistics>();
+            //TODO: fix
             DateTime from = fromDate ?? new DateTime(2020, 09, 01);
             endTime = endTime ?? DateTime.Now;
             for (DateTime to = from.AddMonths(1); from <= endTime || from.Month == endTime.Value.Month; to = from.AddMonths(1))
@@ -132,10 +140,10 @@ namespace Kysect.GithubActivityAnalyzer.Services
                     .Select(student => new StudentMonthlyActivity(student.Username, student.GetActivityForPeriod(from, to)))
                     .ToList();
                 var monthStat = new MonthlyStatistics(from, detailedStat);
-                Statistics.Add(monthStat);
+                statistics.Add(monthStat);
                 from = to;
             }
-            return Statistics;
+            return statistics;
         }
     }
 }

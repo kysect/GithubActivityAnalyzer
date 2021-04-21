@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using ClosedXML.Excel;
-using System.Linq;
 using Kysect.GithubActivityAnalyzer.Aggregators;
 
-namespace Kysect.GithubActivityAnalyzer.Services
+namespace Kysect.GithubActivityAnalyzer.DataExport
 {
     public class ExcelExportManager
     {
@@ -103,42 +102,12 @@ namespace Kysect.GithubActivityAnalyzer.Services
 
             return Workbook;
         }
-        public IXLWorkbook ExportSummaryInfo()
-        {
-            IXLWorksheet worksheetSummary = Workbook.Worksheets.Add($"Summary");
-            int month = 0;
-            for (int col = 2; col < Info[0].Statistics.Count+2; col++)
-            {
-                worksheetSummary.Cell(1, col).Value = Info[0].Statistics[month].Month;
-                worksheetSummary.Cell(1, col).Style.DateFormat.Format = "MMMM-yyyy";
-                month++;
-            }
-
-            int row = 2;
-            int column = 2;
-            foreach (var info in Info)
-            {
-                worksheetSummary.Cell(row, 1).Value = info.GroupName;
-
-                foreach (var statistic in info.Statistics)
-                {
-                    worksheetSummary.Cell(row, column).Value = statistic.DetailedStat.Sum(a => a.MonthlyContributions);
-                    column++;
-                }
-
-                column = 2;
-                row++;
-            }
-            worksheetSummary.Columns().AdjustToContents();
-            worksheetSummary.Rows().AdjustToContents();
-            return Workbook;
-        }
 
         public IXLWorkbook ExportFullInfo()
-        { 
-            ExportSummaryInfo();
+        {
             ExportShortInfo();
             ExportDetailedInfo();
+
             return Workbook;
         }
     }
