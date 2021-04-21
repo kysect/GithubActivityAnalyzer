@@ -28,6 +28,7 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
         {
             GroupName = groupName;
             Students = students;
+            Statistics = GetDetailedStat();
         }
 
         public StudyGroup(string groupName, List<string> students, GithubActivityProvider provider)

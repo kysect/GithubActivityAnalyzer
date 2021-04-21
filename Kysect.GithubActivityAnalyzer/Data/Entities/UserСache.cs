@@ -1,4 +1,4 @@
-﻿namespace Kysect.GithubActivityAnalyzer.ResultCache.Entities
+﻿namespace Kysect.GithubActivityAnalyzer.Data.Entities
 {
     public class UserСache
     {
