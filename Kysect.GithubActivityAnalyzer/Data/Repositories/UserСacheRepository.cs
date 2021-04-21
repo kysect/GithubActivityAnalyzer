@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
 using Kysect.GithubActivityAnalyzer.Data.Entities;
@@ -63,6 +64,20 @@ namespace Kysect.GithubActivityAnalyzer.Data.Repositories
             var activity = JsonSerializer.Deserialize<ActivityInfo>(userCash.ActivityInfo, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             return activity;
         }
+        public List<(string Username, ActivityInfo Activity)> GetActivityFromUserCash(IEnumerable<string> usernames, bool isParallel)
+        {
+            if (!isParallel)
+            {
+                return usernames
+                    .Select(username => (username, GetActivityFromUserCash(FindByUsername(username))))
+                    .ToList();
+            }
 
+            List<(string, ActivityInfo)> result = usernames
+                .AsParallel()
+                .Select(username => (username, GetActivityFromUserCash(FindByUsername(username))))
+                .ToList();
+            return result;
+        }
     }
 }
