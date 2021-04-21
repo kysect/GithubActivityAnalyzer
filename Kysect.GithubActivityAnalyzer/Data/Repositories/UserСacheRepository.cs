@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Text.Json;
+using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
 using Kysect.GithubActivityAnalyzer.Data.Entities;
-using Kysect.GithubActivityAnalyzer.Models.ApiResponses;
 using Microsoft.EntityFrameworkCore;
 
 namespace Kysect.GithubActivityAnalyzer.Data.Repositories
