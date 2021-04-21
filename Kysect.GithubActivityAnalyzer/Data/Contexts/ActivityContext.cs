@@ -1,14 +1,14 @@
-﻿using Kysect.GithubActivityAnalyzer.ResultCache.Entities;
+﻿using Kysect.GithubActivityAnalyzer.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kysect.GithubActivityAnalyzer.ResultCache.Repositories
+namespace Kysect.GithubActivityAnalyzer.Data.Contexts
 {
     public class ActivityContext : DbContext
     {
         public DbSet<UserСache> UserСache { get; set; }
-        
+
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite($"Data Source=..\\myDB.db");
+            => options.UseSqlite($"Data Source=..\\ActivityDB.db");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
