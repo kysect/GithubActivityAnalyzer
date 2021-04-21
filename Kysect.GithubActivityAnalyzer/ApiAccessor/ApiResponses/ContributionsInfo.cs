@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace Kysect.GithubActivityAnalyzer.Models.ApiResponses
+namespace Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses
 {
     public class ContributionsInfo
     { 

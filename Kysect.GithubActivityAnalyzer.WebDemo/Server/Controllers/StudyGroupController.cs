@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
-using Kysect.GithubActivityAnalyzer.Models.Aggregations;
-using Kysect.GithubActivityAnalyzer.Services;
+using Kysect.GithubActivityAnalyzer.Aggregators;
+using Kysect.GithubActivityAnalyzer.Aggregators.Models;
+using Kysect.GithubActivityAnalyzer.ApiAccessor;
 using Kysect.GithubActivityAnalyzer.WebDemo.Shared;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Controllers

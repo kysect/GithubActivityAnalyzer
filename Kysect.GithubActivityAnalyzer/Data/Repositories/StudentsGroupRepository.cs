@@ -49,8 +49,7 @@ namespace Kysect.GithubActivityAnalyzer.Data.Repositories
         }
         public IQueryable<StudentsGroup> GetAllByGroup(string studyGroup)
         {
-            return _dbSet.Where(p => p.StudyGroup == studyGroup); ;
+            return _dbSet.Where(p => p.StudyGroup == studyGroup);
         }
-
     }
 }

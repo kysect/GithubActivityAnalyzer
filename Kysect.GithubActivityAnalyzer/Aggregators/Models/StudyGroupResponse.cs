@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Kysect.GithubActivityAnalyzer.Services;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Kysect.GithubActivityAnalyzer.Models.Aggregations
+namespace Kysect.GithubActivityAnalyzer.Aggregators.Models
 {
     public class StudyGroupResponse
     {
