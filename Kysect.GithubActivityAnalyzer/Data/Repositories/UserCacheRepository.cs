@@ -2,20 +2,21 @@
 using System.Linq;
 using System.Text.Json;
 using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
+using Kysect.GithubActivityAnalyzer.Data.Contexts;
 using Kysect.GithubActivityAnalyzer.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Kysect.GithubActivityAnalyzer.Data.Repositories
 {
-    public class UserСacheRepository : IRepository<UserСache>
+    public class UserCacheRepository : IRepository<UserСache>
     {
-        readonly DbContext _context;
+        readonly ActivityContext _context;
         readonly DbSet<UserСache> _dbSet;
 
-        public UserСacheRepository(DbContext context, DbSet<UserСache> set)
+        public UserCacheRepository(ActivityContext context)
         {
             _context = context;
-            _dbSet = set;
+            _dbSet = context.UserСache;
         }
 
         public IQueryable<UserСache> GetAll()
