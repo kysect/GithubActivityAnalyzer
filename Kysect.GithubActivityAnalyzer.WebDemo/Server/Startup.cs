@@ -6,6 +6,11 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Kysect.GithubActivityAnalyzer.Data.Contexts;
+using Microsoft.EntityFrameworkCore;
+using Kysect.GithubActivityAnalyzer.WebDemo.Server.Services;
+using Kysect.GithubActivityAnalyzer.Data.Repositories;
+using Kysect.GithubActivityAnalyzer.ApiAccessor;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Server
 {
@@ -36,6 +41,15 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Server
                                .AllowAnyHeader();
                     });
             });
+            services.AddDbContext<ActivityContext>(options =>
+            {
+                options.UseSqlite($"Data Source= ActivityDB.db");
+            });
+            services.AddScoped<DbContext, ActivityContext>();
+        
+            services.AddScoped<UserCacheRepository>();
+            services.AddScoped<GithubActivityProvider>();
+            services.AddScoped<IActivityService, ActivityService>();
             services.AddControllers();
         }
 
