@@ -6,7 +6,8 @@
 <p>
     <input @bind="SetName" @bind:event="oninput" />
 </p>
-<button class="btn btn-primary" @onclick="CreateClient">Click me</button>
+<button class="btn btn-primary" @onclick="CreateClient">From Github</button>
+<button class="btn btn-primary" @onclick="CreateClient1">From DB</button>
 @if(SetName == null)
 {
     <p><em>Please write name</em></p>
@@ -32,6 +33,11 @@ else
 
     protected async Task CreateClient()
     {
-        Info = await Http.GetFromJsonAsync<ActivityInfo>($"GitHubApi?username={SetName}");
+        Info = await Http.GetFromJsonAsync<ActivityInfo>($"GitHubApi/fromGithub?username={SetName}");
+    }
+
+    protected async Task CreateClient1()
+    {
+        Info = await Http.GetFromJsonAsync<ActivityInfo>($"GitHubApi/fromDB?username={SetName}");
     }
 }
