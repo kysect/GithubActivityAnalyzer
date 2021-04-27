@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Shared
 {
    public class GroupStatRequest
    {
         public string GroupName { get; set; }
-        public List<string> usernames { get; set; }
+        public List<string> Usernames { get; set; }
 
-        public GroupStatRequest()
-        { }
+        public GroupStatRequest(){ }
 
         public GroupStatRequest(string groupName)
         {

@@ -1,43 +1,42 @@
 ﻿@page "/testpage"
-@using System.Text.Json
 @using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses
 @inject HttpClient Http
 <h1>TestFunc</h1>
 <p>
-    <input @bind="SetName" @bind:event="oninput" />
+    <input @bind="_setName" @bind:event="oninput" />
 </p>
-<button class="btn btn-primary" @onclick="CreateClient">From Github</button>
-<button class="btn btn-primary" @onclick="CreateClient1">From DB</button>
-@if(SetName == null)
+<button class="btn btn-primary" @onclick="GetActivityFromGithub">From Github</button>
+<button class="btn btn-primary" @onclick="GetActivityFromDB">From DB</button>
+@if(_setName == null)
 {
     <p><em>Please write name</em></p>
 }
 else
 {
-    <p>Name: @SetName </p>
+    <p>Name: @_setName </p>
 }
-@if (Info == null)
+@if (_info == null)
 {
     <p>Please wait...</p>
 }
 else
 {
-    <p>Contributions: @Info.Total</p>
+    <p>Contributions: @_info.Total</p>
 }
 
 @code {
-    private string SetName { get; set; } = String.Empty;
-    private ActivityInfo Info { get; set; }
+    private string _setName { get; set; } = String.Empty;
+    private ActivityInfo _info { get; set; }
 
 
 
-    protected async Task CreateClient()
+    protected async Task GetActivityFromGithub()
     {
-        Info = await Http.GetFromJsonAsync<ActivityInfo>($"GitHubApi/fromGithub?username={SetName}");
+        _info = await Http.GetFromJsonAsync<ActivityInfo>($"GitHubApi/fromGithub?username={_setName}");
     }
 
-    protected async Task CreateClient1()
+    protected async Task GetActivityFromDB()
     {
-        Info = await Http.GetFromJsonAsync<ActivityInfo>($"GitHubApi/fromDB?username={SetName}");
+        _info = await Http.GetFromJsonAsync<ActivityInfo>($"GitHubApi/fromDB?username={_setName}");
     }
 }
