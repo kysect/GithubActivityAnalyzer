@@ -6,7 +6,7 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class DetailedGroupStatController : Controller
+    public class DetailedTeamStatController : Controller
     {
         private readonly GithubActivityProvider _provider = new GithubActivityProvider();
 

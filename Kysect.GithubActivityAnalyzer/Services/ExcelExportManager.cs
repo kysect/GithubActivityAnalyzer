@@ -7,15 +7,15 @@ namespace Kysect.GithubActivityAnalyzer.Services
 {
     public class ExcelExportManager
     {
-        public List<StudyGroup> Info { get; set; }
+        public List<Team> Info { get; set; }
         private IXLWorkbook Workbook { get; }
 
-        public ExcelExportManager(List<StudyGroup> info)
+        public ExcelExportManager(List<Team> info)
         {
             Info = info;
             Workbook = new XLWorkbook();
         }
-        public ExcelExportManager(List<StudyGroup> info, IXLWorkbook workbook)
+        public ExcelExportManager(List<Team> info, IXLWorkbook workbook)
         {
             Info = info;
             Workbook = workbook;
@@ -28,24 +28,24 @@ namespace Kysect.GithubActivityAnalyzer.Services
 
         public IXLWorkbook ExportShortInfo()
         {
-            foreach (var groupInfo in Info)
+            foreach (var teamInfo in Info)
             {
-                IXLWorksheet worksheet = Workbook.Worksheets.Add($"{groupInfo.GroupName}");
+                IXLWorksheet worksheet = Workbook.Worksheets.Add($"{teamInfo.TeamName}");
                 worksheet.Cell(2, 1).Value = "Среднее количество коммитов за месяц:";
                 worksheet.Cell(3, 1).Value = "Всего коммитов за месяц:";
                 worksheet.Cell(4, 1).Value = "Котик месяца:";
                 worksheet.Cell(5, 1).Value = "Кандидат на ремень по жопе:";
                 worksheet.Row(1).SetDataType(XLDataType.Text);
-                for(int column = 2; column<groupInfo.Statistics.Count + 2; column++)
+                for(int column = 2; column<teamInfo.Statistics.Count + 2; column++)
                 {
-                    worksheet.Cell(1, column).Value = groupInfo.Statistics[column-2].Month;
+                    worksheet.Cell(1, column).Value = teamInfo.Statistics[column-2].Month;
                     worksheet.Cell(1, column).Style.DateFormat.Format = "MMMM-yyyy";
-                    worksheet.Cell(2, column).Value = groupInfo.Statistics[column - 2].AverageValue;
-                    worksheet.Cell(3, column).Value = groupInfo.Statistics[column - 2].TotalContributions;
+                    worksheet.Cell(2, column).Value = teamInfo.Statistics[column - 2].AverageValue;
+                    worksheet.Cell(3, column).Value = teamInfo.Statistics[column - 2].TotalContributions;
                     worksheet.Cell(4, column).Value =
-                        groupInfo.Statistics[column-2].MaxValueStudent.Username + ":" + groupInfo.Statistics[column - 2].MaxValueStudent.MonthlyContributions;
+                        teamInfo.Statistics[column-2].MaxValueMember.Username + ":" + teamInfo.Statistics[column - 2].MaxValueMember.MonthlyContributions;
                     worksheet.Cell(5, column).Value =
-                        groupInfo.Statistics[column - 2].MinValueStudent.Username + ":" + groupInfo.Statistics[column - 2].MinValueStudent.MonthlyContributions;
+                        teamInfo.Statistics[column - 2].MinValueMember.Username + ":" + teamInfo.Statistics[column - 2].MinValueMember.MonthlyContributions;
                 }
                 worksheet.Columns().AdjustToContents();
                 worksheet.Rows().AdjustToContents();
@@ -57,11 +57,11 @@ namespace Kysect.GithubActivityAnalyzer.Services
         {
             foreach (var info in Info)
             {
-                IXLWorksheet worksheetDetailed = Workbook.Worksheets.Add($"{info.GroupName}-DetailedStat");
+                IXLWorksheet worksheetDetailed = Workbook.Worksheets.Add($"{info.TeamName}-DetailedStat");
 
-                for (int row = 2; row < info.Students.Count + 2; row++)
+                for (int row = 2; row < info.Members.Count + 2; row++)
                 {
-                    worksheetDetailed.Cell(row, 1).Value = info.Students[row - 2].Username;
+                    worksheetDetailed.Cell(row, 1).Value = info.Members[row - 2].Username;
                 }
                 int column = 2;
 
@@ -118,7 +118,7 @@ namespace Kysect.GithubActivityAnalyzer.Services
             int column = 2;
             foreach (var info in Info)
             {
-                worksheetSummary.Cell(row, 1).Value = info.GroupName;
+                worksheetSummary.Cell(row, 1).Value = info.TeamName;
 
                 foreach (var statistic in info.Statistics)
                 {
