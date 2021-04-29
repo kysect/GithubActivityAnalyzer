@@ -1,25 +1,25 @@
-﻿@page "/getstudyGroup"
+﻿@page "/Team"
 @using Kysect.GithubActivityAnalyzer.WebDemo.Shared
 @using Kysect.GithubActivityAnalyzer.Aggregators.Models
 @inject HttpClient Http
 <h1>TestFunc</h1>
 <p>
-    <input @bind="_groupName" @bind:event="oninput" />
+    <input @bind="_teamName" @bind:event="oninput" />
 </p>
 <p>
     <input @bind="_username" @bind:event="oninput" />
 </p>
-<button class="btn btn-primary" @onclick="AddStudent">Add student</button>
+<button class="btn btn-primary" @onclick="AddStudent">Add member</button>
 <p>
     <button class="btn btn-primary" @onclick="GetStat">Get Stat</button>
 </p>
-@if (_groupName == null && !_statsIsVisible)
+@if (_teamName == null && !_statsIsVisible)
 {
-    <p><em>Please write group name</em></p>
+    <p><em>Please write team name</em></p>
 }
 else
 {
-    <p>Group name: @_groupName </p>
+    <p>Team name: @_teamName </p>
 }
 @if (_usernames.Count == 0 && !_statsIsVisible)
 {
@@ -41,13 +41,13 @@ else
 }
 @if (_statsIsVisible)
 {
-    <p>All Contributions: @_studyGroup.TotalContributions</p>
+    <p>All Contributions: @_team.TotalContributions</p>
     <table class="table">
         <thead>
             <tr><th>Username</th><th>Contributions:</th></tr>
         </thead>
         <tbody>
-            @foreach (var person in _studyGroup.DetailedStatisticsList[0].DetailedStat)
+            @foreach (var person in _team.DetailedStatisticsList[0].DetailedStat)
             {
                 <tr><td>@person.Username</td><td>@person.MonthlyContributions</td></tr>
 
@@ -59,21 +59,21 @@ else
 
 @code {
     private string _username { get; set; } = String.Empty;
-    private string _groupName { get; set; } = String.Empty;
+    private string _teamName { get; set; } = String.Empty;
     private List<string> _usernames { get; set; } = new List<string>();
-    private StudyGroupResponse _studyGroup;
+    private TeamResponse _team;
     private bool _statsIsVisible { get; set; } = false;
 
 
     protected async Task GetStat()
     {
-        GroupStatRequest newGroupInfo = new GroupStatRequest()
+        Team newTeamInfo = new Team()
         {
-            GroupName = _groupName,
+            TeamName = _teamName,
             Usernames = _usernames
         };
-        var response = await Http.PostAsJsonAsync("StudyGroup", newGroupInfo);
-        _studyGroup = await response.Content.ReadFromJsonAsync<StudyGroupResponse>();
+        var response = await Http.PostAsJsonAsync("Team", newTeamInfo);
+        _team = await response.Content.ReadFromJsonAsync<TeamResponse>();
         _statsIsVisible = true;
     }
 

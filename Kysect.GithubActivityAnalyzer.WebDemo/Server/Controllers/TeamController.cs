@@ -8,14 +8,14 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class StudyGroupController : Controller
+    public class TeamController : Controller
     {
         private readonly GithubActivityProvider _provider = new GithubActivityProvider();
 
         [HttpPost]
-        public StudyGroupResponse GetStudyGroup(GroupStatRequest info)
+        public TeamResponse GetStudyGroup(Shared.Team info)
         {
-            return new StudyGroupResponse(new StudyGroup(info.GroupName, info.Usernames, _provider)); 
+            return new TeamResponse(new Aggregators.Team(info.TeamName, info.Usernames, _provider)); 
         }
     }
 }

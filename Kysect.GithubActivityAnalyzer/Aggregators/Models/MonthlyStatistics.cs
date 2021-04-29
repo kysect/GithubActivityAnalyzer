@@ -7,23 +7,23 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators.Models
     public class MonthlyStatistics
     {
         public DateTime Month { get; set; }
-        public List<StudentMonthlyActivity> DetailedStat { get; set; }
-        public StudentMonthlyActivity MinValueStudent { get; set; }
-        public StudentMonthlyActivity MaxValueStudent { get; set; }
+        public List<MemberMonthlyActivity> DetailedStat { get; set; }
+        public MemberMonthlyActivity MinValueMember { get; set; }
+        public MemberMonthlyActivity MaxValueMember { get; set; }
         public double AverageValue { get; set; }
         public int TotalContributions { get; set; }
 
 
-        public MonthlyStatistics(DateTime date, List<StudentMonthlyActivity> detailedStat)
+        public MonthlyStatistics(DateTime date, List<MemberMonthlyActivity> detailedStat)
         {
             DetailedStat = detailedStat;
             Month = date;
 
-                MinValueStudent = DetailedStat
+            MinValueMember = DetailedStat
                 .OrderBy(a => a.MonthlyContributions)
                 .First();
 
-                 MaxValueStudent = DetailedStat
+            MaxValueMember = DetailedStat
                 .OrderBy(a => a.MonthlyContributions)
                 .Last();
 
@@ -37,17 +37,17 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators.Models
         }
     }
 
-    public class StudentMonthlyActivity
+    public class MemberMonthlyActivity
     {
         public string Username { get; set; }
 
         public int MonthlyContributions { get; set; }
 
-        public StudentMonthlyActivity()
+        public MemberMonthlyActivity()
         {
         }
 
-        public StudentMonthlyActivity(string username, int monthlyContributions)
+        public MemberMonthlyActivity(string username, int monthlyContributions)
         {
             Username = username;
             MonthlyContributions = monthlyContributions;

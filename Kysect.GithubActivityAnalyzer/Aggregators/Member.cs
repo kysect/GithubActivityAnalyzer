@@ -4,18 +4,18 @@ using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
 
 namespace Kysect.GithubActivityAnalyzer.Aggregators
 {
-    public class Student
+    public class Member
     {
         public string Username { get; set; }
         public ActivityInfo ActivityInfo { get; set; }
         
         public int TotalContributions => ActivityInfo.Total;
 
-        public Student()
+        public Member()
         {
         }
 
-        public Student(string username, ActivityInfo activityInfo)
+        public Member(string username, ActivityInfo activityInfo)
         {
             Username = username;
             ActivityInfo = activityInfo;
