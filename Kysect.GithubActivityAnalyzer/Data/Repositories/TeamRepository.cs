@@ -52,5 +52,12 @@ namespace Kysect.GithubActivityAnalyzer.Data.Repositories
         {
             return _dbSet.Where(p => p.Team == team);
         }
+        public void DeleteByTeam(string team)
+        {
+            foreach( var member in GetAllByTeam(team))
+            {
+                Delete(member);
+            }
+        }
     }
 }

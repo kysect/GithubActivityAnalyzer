@@ -45,11 +45,19 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Server
             {
                 options.UseSqlite($"Data Source= ActivityDB.db");
             });
+            services.AddDbContext<TeamContext>(options =>
+            {
+                options.UseSqlite($"Data Source= Teams.db");
+            });
             services.AddScoped<DbContext, ActivityContext>();
+            services.AddScoped<DbContext, TeamContext>();
         
             services.AddScoped<UserCacheRepository>();
+            services.AddScoped<TeamRepository>();
             services.AddScoped<GithubActivityProvider>();
+
             services.AddScoped<IActivityService, ActivityService>();
+            services.AddScoped<ITeamService, TeamService>();
             services.AddControllers();
         }
 
