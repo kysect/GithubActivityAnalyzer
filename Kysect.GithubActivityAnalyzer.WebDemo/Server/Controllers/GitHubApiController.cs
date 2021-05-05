@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-using Kysect.GithubActivityAnalyzer.ApiAccessor;
-using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
+﻿using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
 using Kysect.GithubActivityAnalyzer.WebDemo.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 

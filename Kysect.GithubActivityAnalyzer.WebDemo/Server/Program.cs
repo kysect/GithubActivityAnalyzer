@@ -1,15 +1,8 @@
 ﻿using Kysect.GithubActivityAnalyzer.Data.Contexts;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Server
 {
@@ -19,11 +12,11 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Server
         {
             var host = CreateHostBuilder(args).Build();
 
-            using (var scope = host.Services.CreateScope())
-            using (var context = scope.ServiceProvider.GetService<ActivityContext>())
-            {
-                context.Database.EnsureCreated();
-            }
+            var scope = host.Services.CreateScope();
+            var activityContext = scope.ServiceProvider.GetService<ActivityContext>();
+            activityContext.Database.EnsureCreated(); 
+            var studentsGroupContext = scope.ServiceProvider.GetService<TeamContext>();
+            studentsGroupContext.Database.EnsureCreated();
 
             host.Run();
         }
