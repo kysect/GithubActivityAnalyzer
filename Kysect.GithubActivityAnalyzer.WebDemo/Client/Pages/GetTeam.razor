@@ -58,11 +58,11 @@ else
 }
 
 @code {
-    private string _username { get; set; } = String.Empty;
-    private string _teamName { get; set; } = String.Empty;
-    private List<string> _usernames { get; set; } = new List<string>();
+    private string _username = String.Empty;
+    private string _teamName = String.Empty;
+    private List<string> _usernames = new List<string>();
     private TeamResponse _team;
-    private bool _statsIsVisible { get; set; } = false;
+    private bool _statsIsVisible = false;
 
 
     protected async Task GetStat()
