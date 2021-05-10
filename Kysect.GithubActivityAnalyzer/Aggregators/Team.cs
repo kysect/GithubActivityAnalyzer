@@ -7,79 +7,79 @@ using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
 
 namespace Kysect.GithubActivityAnalyzer.Aggregators
 {
-    public class StudyGroup
+    public class Team
     {
-        public string GroupName { get; set; }
-        public List<Student> Students { get; set; }
+        public string TeamName { get; set; }
+        public List<Member> Members { get; set; }
         public List<MonthlyStatistics> Statistics => GetDetailedStat();
         public int TotalContributions => TotalActivity();
 
-        public StudyGroup()
+        public Team()
         {
         }
 
-        public StudyGroup(string groupName)
+        public Team(string teamName)
         {
-            GroupName = groupName;
-            Students = new List<Student>();
+            TeamName = teamName;
+            Members = new List<Member>();
         }
 
-        public StudyGroup(string groupName, List<Student> students)
+        public Team(string teamName, List<Member> members)
         {
-            GroupName = groupName;
-            Students = students;
+            TeamName = teamName;
+            Members = members;
         }
 
-        public StudyGroup(string groupName, List<string> students, GithubActivityProvider provider)
+        public Team(string teamName, List<string> members, GithubActivityProvider provider)
         {
-            GroupName = groupName;
-            Students = new List<Student>();
-            foreach ((string username, ActivityInfo activity) in provider.GetActivityInfo(students, true))
+            TeamName = teamName;
+            Members = new List<Member>();
+            foreach ((string username, ActivityInfo activity) in provider.GetActivityInfo(members, true))
             {
-                Students.Add(new Student(username, activity));
+                Members.Add(new Member(username, activity));
             }
         }
 
-        public static List<StudyGroup> CreateFromUserList(List<UserWithTag> users, GithubActivityProvider provider)
+        public static List<Team> CreateFromUserList(List<UserWithTag> users, GithubActivityProvider provider)
         {
             return users
                 .ToLookup(user => user.Tag, user => user.Username)
-                .Select(group => new StudyGroup(@group.Key, @group.ToList(), provider))
+                .Select(group => new Team(@group.Key, @group.ToList(), provider))
                 .ToList();
         }
 
         private int TotalActivity()
         {
-            return Students
+            return Members
                 .Select(k => k.TotalContributions)
                 .Sum();
         }
 
-        public void AddStudents(GithubActivityProvider provider, bool isParallel, params string[] usernames)
+        public void AddMembers(GithubActivityProvider provider, bool isParallel, params string[] usernames)
         {
             var listInfo = provider.GetActivityInfo(usernames, isParallel);
             foreach (var item in listInfo)
             {
-                Students.Add(new Student(item.Username, item.Activity));
+               Members.Add(new Member(item.Username, item.Activity));
             }
         }
 
-        public Student GetMinValueStudent(DateTime? from = null, DateTime? to = null)
+        public Member GetMinValueMember(DateTime? from = null, DateTime? to = null)
         {
             from ??= DateTime.MinValue;
             to ??= DateTime.Now;
 
-            return Students
+            return Members
                 .OrderBy(k => k.ActivityInfo.GetActivityForPeriod(from.GetValueOrDefault(), to.GetValueOrDefault()))
                 .Last();
 
         }
-        public Student GetMaxValueStudent(DateTime? from = null, DateTime? to = null)
+        public Member GetMaxValueMember(DateTime? from = null, DateTime? to = null)
         {
             from ??= DateTime.MinValue;
             to ??= DateTime.Now;
 
-            return Students
+            return Members
                 .OrderBy(k => k.ActivityInfo.GetActivityForPeriod(from.GetValueOrDefault(), to.GetValueOrDefault()))
                 .First();
 
@@ -89,7 +89,7 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
             from ??= DateTime.MinValue;
             to ??= DateTime.Now;
 
-            return Students
+            return Members
                 .Select(k => k.ActivityInfo.GetActivityForPeriod(from.GetValueOrDefault(), to.GetValueOrDefault()))
                 .Average();
         }
@@ -98,24 +98,24 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
         {
             Dictionary<string, int> usersContributions = new Dictionary<string, int>();
 
-            foreach (var student in Students)
+            foreach (var member in Members)
             {
-                usersContributions.Add(student.Username, student.TotalContributions);
+                usersContributions.Add(member.Username, member.TotalContributions);
             }
             return usersContributions;
         }
 
         public int GetActivityForPeriod(DateTime from, DateTime to)
         {
-            return Students
-                .Select(student => student.ActivityInfo.GetActivityForPeriod(@from, to))
+            return Members
+                .Select(member => member.ActivityInfo.GetActivityForPeriod(@from, to))
                 .Sum();
         }
 
         public double GetAverageMonthActivity()
         {
-            return Students
-                .Select(student => Convert.ToInt32(student.ActivityInfo.PerMonthActivity()
+            return Members
+                .Select(member => Convert.ToInt32(member.ActivityInfo.PerMonthActivity()
                 .Average(c => c.Count)))
                 .ToList()
                 .Average();
@@ -123,7 +123,7 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
 
         public double GetMovingAverage(DateTime from, DateTime to)
         {
-            return Students
+            return Members
                 .Select(s => s.GetMovingAverage(from, to))
                 .Average();
         }
@@ -136,8 +136,8 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
             endTime = endTime ?? DateTime.Now;
             for (DateTime to = from.AddMonths(1); from <= endTime || from.Month == endTime.Value.Month; to = from.AddMonths(1))
             {
-                var detailedStat = this.Students
-                    .Select(student => new StudentMonthlyActivity(student.Username, student.GetActivityForPeriod(from, to)))
+                var detailedStat = this.Members
+                    .Select(member => new MemberMonthlyActivity(member.Username, member.GetActivityForPeriod(from, to)))
                     .ToList();
                 var monthStat = new MonthlyStatistics(from, detailedStat);
                 statistics.Add(monthStat);

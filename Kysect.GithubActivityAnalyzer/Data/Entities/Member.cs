@@ -1,8 +1,8 @@
 ﻿namespace Kysect.GithubActivityAnalyzer.Data.Entities
 {
-    public class StudentsGroup
+    public class Member
     {
         public string Username { get; set; }
-        public string StudyGroup { get; set; }
+        public string Team { get; set; }
     }
 }

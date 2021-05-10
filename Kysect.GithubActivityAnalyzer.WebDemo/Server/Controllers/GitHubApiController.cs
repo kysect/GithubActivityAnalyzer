@@ -1,6 +1,5 @@
-﻿using System.Text.Json;
-using Kysect.GithubActivityAnalyzer.ApiAccessor;
-using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
+﻿using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
+using Kysect.GithubActivityAnalyzer.WebDemo.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Controllers
@@ -9,12 +8,22 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Controllers
   [Route("[controller]")]
     public class GitHubApiController : Controller
     {
-        private GithubActivityProvider provider = new GithubActivityProvider();
-
-        [HttpGet]
-        public ActivityInfo Get(string username)
+        private readonly IActivityService _activityService;
+        public GitHubApiController(IActivityService activityService)
         {
-            return provider.GetActivityInfo(username).Result;
+            _activityService = activityService;
+        }
+
+        [HttpGet("fromGithub")]
+        public ActivityInfo OnGetFromGithub(string username)
+        {
+            return _activityService.GetActivityInfoFromGithub(username).Result;
+        }
+
+        [HttpGet("FromDB")]
+        public ActivityInfo OnGetFromDB(string username)
+        {
+            return _activityService.GetActivityInfoFromDB(username);
         }
     }
 }
