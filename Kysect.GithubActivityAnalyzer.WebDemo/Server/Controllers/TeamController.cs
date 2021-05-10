@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 using Kysect.GithubActivityAnalyzer.Aggregators;
 using Kysect.GithubActivityAnalyzer.Aggregators.Models;
 using Kysect.GithubActivityAnalyzer.ApiAccessor;
@@ -9,14 +8,14 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class StudyGroupController : Controller
+    public class TeamController : Controller
     {
-        private GithubActivityProvider _provider = new GithubActivityProvider();
+        private readonly GithubActivityProvider _provider = new GithubActivityProvider();
 
         [HttpPost]
-        public StudyGroupResponse GetStudyGroup(GroupStatRequest info)
+        public TeamResponse GetStudyGroup(Shared.Team info)
         {
-            return new StudyGroupResponse(new StudyGroup(info.GroupName, info.usernames, _provider)); 
+            return new TeamResponse(new Aggregators.Team(info.TeamName, info.Usernames, _provider)); 
         }
     }
 }

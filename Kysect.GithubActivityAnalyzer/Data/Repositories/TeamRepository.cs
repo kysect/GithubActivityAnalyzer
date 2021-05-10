@@ -1,36 +1,37 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Kysect.GithubActivityAnalyzer.Data.Entities;
+using Kysect.GithubActivityAnalyzer.Data.Contexts;
 
 namespace Kysect.GithubActivityAnalyzer.Data.Repositories
 {
-    public class StudentsGroupRepository : IRepository<StudentsGroup>
+    public class TeamRepository : IRepository<Member>
     {
-        readonly DbContext _context;
-        readonly DbSet<StudentsGroup> _dbSet;
+        readonly TeamContext _context;
+        readonly DbSet<Member> _dbSet;
 
-        public StudentsGroupRepository(DbContext context, DbSet<StudentsGroup> set)
+        public TeamRepository(TeamContext context)
         {
             _context = context;
-            _dbSet = set;
+            _dbSet = context.Team;
         }
 
-        public StudentsGroup Create(StudentsGroup item)
+        public Member Create(Member item)
         {
             _dbSet.Add(item);
             _context.SaveChanges();
             return item;
         }
-        public IQueryable<StudentsGroup> Get()
+        public IQueryable<Member> Get()
         {
             return _dbSet;
         }
-        public void Update(StudentsGroup item)
+        public void Update(Member item)
         {
             DeleteByUsername(item.Username);
             Create(item);
         }
-        public void Delete(StudentsGroup item)
+        public void Delete(Member item)
         {
             _dbSet.Remove(item);
             _context.SaveChanges();
@@ -39,17 +40,24 @@ namespace Kysect.GithubActivityAnalyzer.Data.Repositories
         {
             Delete(FindByUsername(username));
         }
-        public IQueryable<StudentsGroup> GetAll()
+        public IQueryable<Member> GetAll()
         {
             return _dbSet;
         }
-        public StudentsGroup FindByUsername(string username)
+        public Member FindByUsername(string username)
         {
             return _dbSet.Find(username);
         }
-        public IQueryable<StudentsGroup> GetAllByGroup(string studyGroup)
+        public IQueryable<Member> GetAllByTeam(string team)
         {
-            return _dbSet.Where(p => p.StudyGroup == studyGroup);
+            return _dbSet.Where(p => p.Team == team);
+        }
+        public void DeleteByTeam(string team)
+        {
+            foreach( var member in GetAllByTeam(team))
+            {
+                Delete(member);
+            }
         }
     }
 }

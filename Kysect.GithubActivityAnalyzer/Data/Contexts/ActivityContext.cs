@@ -5,21 +5,13 @@ namespace Kysect.GithubActivityAnalyzer.Data.Contexts
 {
     public class ActivityContext : DbContext
     {
+        public ActivityContext(DbContextOptions<ActivityContext> options) : base(options) { }
         public DbSet<UserСache> UserСache { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite($"Data Source=..\\ActivityDB.db");
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserСache>()
                 .HasKey(b => b.Username)
                 .HasName("PrimaryKey_Username");
-        }
-
-        public ActivityContext()
-        {
-            Database.EnsureCreated();
         }
     }
 }

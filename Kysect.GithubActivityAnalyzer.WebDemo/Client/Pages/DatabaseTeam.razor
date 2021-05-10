@@ -1,0 +1,124 @@
+﻿@page "/databaseTeam"
+@using Kysect.GithubActivityAnalyzer.WebDemo.Shared
+@using Kysect.GithubActivityAnalyzer.Aggregators.Models
+@inject HttpClient Http
+<h1>TestFunc</h1>
+<p>
+    <input @bind="_teamName" @bind:event="oninput" />
+</p>
+<p>
+    <input @bind="_username" @bind:event="oninput" />
+</p>
+<button class="btn btn-primary" @onclick="AddTeam">Add team</button>
+<button class="btn btn-primary" @onclick="DeleteTeam">Delete team</button>
+<button class="btn btn-primary" @onclick="DeleteMember">Delete member</button>
+<button class="btn btn-primary" @onclick="GetStat">Get Stat</button>
+<p>
+    <button class="btn btn-primary" @onclick="AddMember">Add member</button>
+    <button class="btn btn-primary" @onclick="ClearTeamList">Clear</button>
+</p>
+@if (_teamName == null && !_statsIsVisible)
+{
+    <p><em>Please write group name</em></p>
+}
+else
+{
+    <p>Team name: @_teamName </p>
+}
+@if (_usernames.Count == 0 && !_statsIsVisible)
+{
+    <p>Add names</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr><th>Имя</th></tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < _usernames.Count; i++)
+            {
+                <tr><td>@_usernames[i]</td></tr>
+            }
+        </tbody>
+    </table>
+}
+@if (_statsIsVisible)
+{
+    <p>All Contributions: @_team.TotalContributions</p>
+    <table class="table">
+        <thead>
+            <tr><th>Username</th><th>Contributions:</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var person in _team.DetailedStatisticsList[0].DetailedStat)
+            {
+                <tr><td>@person.Username</td><td>@person.MonthlyContributions</td></tr>
+
+            }
+        </tbody>
+    </table>
+
+}
+
+@code {
+    private string _username = String.Empty;
+    private string _teamName = String.Empty;
+    private List<string> _usernames = new List<string>();
+    private TeamResponse _team;
+    private bool _statsIsVisible = false;
+    private bool _result;
+
+    private void ClearTeamList()
+    {
+        _usernames.Clear();
+    }
+    private void AddMember()
+    {
+        _usernames.Add(_username);
+    }
+    protected async Task GetStat()
+    {
+        Team newGroupInfo = new Team()
+        {
+            TeamName = _teamName,
+            Usernames = _usernames
+        };
+        var response = await Http.PostAsJsonAsync("Team", newGroupInfo);
+        _team = await response.Content.ReadFromJsonAsync<TeamResponse>();
+        _statsIsVisible = true;
+    }
+
+    protected async Task AddTeam()
+    {
+        Team newTeam = new Team()
+        {
+            TeamName = _teamName,
+            Usernames = _usernames
+        };
+        await Http.PostAsJsonAsync("DBTeam/addTeam", newTeam);
+    }
+    protected async Task DeleteTeam()
+    {
+        Team team = new Team()
+        {
+            TeamName = _teamName,
+            Usernames = _usernames
+        };
+        await Http.PostAsJsonAsync("DBTeam/deleteTeam", _teamName);
+    }
+    protected async Task DeleteMember()
+    {
+        await Http.PostAsJsonAsync("DBTeam/deleteMember", _username);
+    }
+
+    @*
+        protected async Task UpdateMember()
+        {
+            await Http.PostAsJsonAsync("DBTeam/updateMember");
+        }
+        protected async Task GetAllTeams()
+        {
+        }
+        protected async Task GetTeam() { }*@
+}

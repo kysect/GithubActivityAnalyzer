@@ -1,20 +1,22 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
+using Kysect.GithubActivityAnalyzer.Data.Contexts;
 using Kysect.GithubActivityAnalyzer.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Kysect.GithubActivityAnalyzer.Data.Repositories
 {
-    public class UserСacheRepository : IRepository<UserСache>
+    public class UserCacheRepository : IRepository<UserСache>
     {
-        readonly DbContext _context;
+        readonly ActivityContext _context;
         readonly DbSet<UserСache> _dbSet;
 
-        public UserСacheRepository(DbContext context, DbSet<UserСache> set)
+        public UserCacheRepository(ActivityContext context)
         {
             _context = context;
-            _dbSet = set;
+            _dbSet = context.UserСache;
         }
 
         public IQueryable<UserСache> GetAll()
@@ -63,6 +65,20 @@ namespace Kysect.GithubActivityAnalyzer.Data.Repositories
             var activity = JsonSerializer.Deserialize<ActivityInfo>(userCash.ActivityInfo, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             return activity;
         }
+        public List<(string Username, ActivityInfo Activity)> GetActivityFromUserCash(IEnumerable<string> usernames, bool isParallel)
+        {
+            if (!isParallel)
+            {
+                return usernames
+                    .Select(username => (username, GetActivityFromUserCash(FindByUsername(username))))
+                    .ToList();
+            }
 
+            List<(string, ActivityInfo)> result = usernames
+                .AsParallel()
+                .Select(username => (username, GetActivityFromUserCash(FindByUsername(username))))
+                .ToList();
+            return result;
+        }
     }
 }
