@@ -60,7 +60,7 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
             var listInfo = provider.GetActivityInfo(usernames, isParallel);
             foreach (var item in listInfo)
             {
-               Members.Add(new Member(item.Username, item.Activity));
+               Members.Add(new Member(item.Key, item.Value));
             }
         }
 

@@ -29,19 +29,19 @@ namespace Kysect.GithubActivityAnalyzer.ApiAccessor
             return activityInfo.FilterValues(from, to);
         }
 
-        public List<(string Username, ActivityInfo Activity)> GetActivityInfo(IReadOnlyCollection<string> usernames, bool isParallel, DateTime? from = null, DateTime? to = null)
+        public Dictionary<string, ActivityInfo> GetActivityInfo(IReadOnlyCollection<string> usernames, bool isParallel, DateTime? from = null, DateTime? to = null)
         {
+            return GetInfoWithRetry(usernames, from, to);
+
             if (!isParallel)
             {
                 return usernames
-                    .Select(username => (username, GetActivityInfo(username, @from, to).Result))
-                    .ToList();
+                    .ToDictionary(username => username, username => GetActivityInfo(username, @from, to).Result);
             }
 
             return usernames
                 .AsParallel()
-                .Select(username => (username, GetActivityInfo(username, @from, to).Result))
-                .ToList();
+                .ToDictionary(username => username, username => GetActivityInfo(username, @from, to).Result);
         }
 
         /// <summary>
@@ -51,11 +51,11 @@ namespace Kysect.GithubActivityAnalyzer.ApiAccessor
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns></returns>
-        public List<(string Username, ActivityInfo Activity)> GetInfoWithRetry(IReadOnlyCollection<string> usernames, DateTime? from = null, DateTime? to = null)
+        public Dictionary<string, ActivityInfo> GetInfoWithRetry(IReadOnlyCollection<string> usernames, DateTime? from = null, DateTime? to = null)
         {
             int tryCount = 5;
 
-            List<(string Username, ActivityInfo Activity)> result = new List<(string Username, ActivityInfo Activity)>();
+            Dictionary<string, ActivityInfo> result = new Dictionary<string, ActivityInfo>();
             HashSet<string> processedUsers = new HashSet<string>();
 
             Debug.Print($"Start processing: {usernames.Count}");
@@ -64,7 +64,7 @@ namespace Kysect.GithubActivityAnalyzer.ApiAccessor
                 if (i != 0)
                 {
                     Debug.Print($"Elements for processing left: {usernames.Count - result.Count}");
-                    Thread.Sleep(500);
+                    Thread.Sleep(1000);
                 }
 
                 List<(string Username, ActivityInfo Result)> localResult = usernames
@@ -74,7 +74,7 @@ namespace Kysect.GithubActivityAnalyzer.ApiAccessor
                     .Where(r => r.Result.Total > 0)
                     .ToList();
 
-                result.AddRange(localResult);
+                localResult.ForEach(r => result[r.Username] = r.Result);
                 localResult.ForEach(r => processedUsers.Add(r.Username));
             }
 
