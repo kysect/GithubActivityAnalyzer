@@ -31,8 +31,6 @@ namespace Kysect.GithubActivityAnalyzer.ApiAccessor
 
         public Dictionary<string, ActivityInfo> GetActivityInfo(IReadOnlyCollection<string> usernames, bool isParallel, DateTime? from = null, DateTime? to = null)
         {
-            return GetInfoWithRetry(usernames, from, to);
-
             if (!isParallel)
             {
                 return usernames
@@ -63,7 +61,6 @@ namespace Kysect.GithubActivityAnalyzer.ApiAccessor
                 if (i != 0)
                 {
                     Debug.Print($"Elements for processing left: {usernames.Count - result.Count}");
-                    usernames = usernames.Reverse().ToList();
                     Thread.Sleep(2000);
                 }
 

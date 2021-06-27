@@ -42,7 +42,7 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
 
         public static List<Team> CreateFromUserList(List<UserWithTag> users, GithubActivityProvider provider)
         {
-            Dictionary<string, ActivityInfo> mapToActivity = provider.GetActivityInfo(users.Select(u => u.Username).Reverse().ToList(), true);
+            Dictionary<string, ActivityInfo> mapToActivity = provider.GetActivityInfo(users.Select(u => u.Username).ToList(), true);
 
             List<UserWithTagAndActivity> userWithTagAndActivities = users
                 .Where(u => mapToActivity.ContainsKey(u.Username))
