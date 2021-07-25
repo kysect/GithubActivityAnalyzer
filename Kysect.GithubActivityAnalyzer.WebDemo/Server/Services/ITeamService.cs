@@ -1,4 +1,4 @@
-﻿using Kysect.GithubActivityAnalyzer.Data.Entities;
+﻿using Kysect.GithubActivityAnalyzer.Extensions.Data.Entities;
 using Kysect.GithubActivityAnalyzer.WebDemo.Shared;
 using System.Linq;
 
