@@ -4,7 +4,7 @@
     <OutputType>Library</OutputType>
     <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.1.0</Version>
+    <Version>0.1.2</Version>
     <Authors>Kysect</Authors>
     <RootNamespace>Kysect.GithubActivityAnalyzer</RootNamespace>
     <AssemblyName>Kysect.GithubActivityAnalyzer</AssemblyName>
@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ClosedXML" Version="0.95.4" />
     <PackageReference Include="System.Text.Json" Version="5.0.2" />
   </ItemGroup>
 
