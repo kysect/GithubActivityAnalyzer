@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Text.Json;
 using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
-using Kysect.GithubActivityAnalyzer.Data.Contexts;
-using Kysect.GithubActivityAnalyzer.Data.Entities;
+using Kysect.GithubActivityAnalyzer.Extensions.Data.Contexts;
+using Kysect.GithubActivityAnalyzer.Extensions.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kysect.GithubActivityAnalyzer.Data.Repositories
+namespace Kysect.GithubActivityAnalyzer.Extensions.Data.Repositories
 {
     public class UserCacheRepository : IRepository<UserСache>
     {

@@ -1,7 +1,7 @@
 ﻿using Kysect.GithubActivityAnalyzer.WebDemo.Shared;
-using Kysect.GithubActivityAnalyzer.Data.Repositories;
-using Kysect.GithubActivityAnalyzer.Data.Entities;
 using System.Linq;
+using Kysect.GithubActivityAnalyzer.Extensions.Data.Repositories;
+using Kysect.GithubActivityAnalyzer.Extensions.Data.Entities;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Services
 {

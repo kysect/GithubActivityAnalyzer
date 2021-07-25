@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Kysect.GithubActivityAnalyzer.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Kysect.GithubActivityAnalyzer.WebDemo.Server.Services;
-using Kysect.GithubActivityAnalyzer.Data.Repositories;
 using Kysect.GithubActivityAnalyzer.ApiAccessor;
+using Kysect.GithubActivityAnalyzer.Extensions.Data.Repositories;
+using Kysect.GithubActivityAnalyzer.Extensions.Data.Contexts;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Server
 {

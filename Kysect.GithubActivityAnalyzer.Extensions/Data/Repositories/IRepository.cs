@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Kysect.GithubActivityAnalyzer.Data.Repositories
+namespace Kysect.GithubActivityAnalyzer.Extensions.Data.Repositories
 {
     public interface IRepository<TEntity>
     {

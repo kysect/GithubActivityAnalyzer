@@ -1,6 +1,6 @@
 ﻿using Kysect.GithubActivityAnalyzer.ApiAccessor;
 using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
-using Kysect.GithubActivityAnalyzer.Data.Repositories;
+using Kysect.GithubActivityAnalyzer.Extensions.Data.Repositories;
 using System.Threading.Tasks;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Services

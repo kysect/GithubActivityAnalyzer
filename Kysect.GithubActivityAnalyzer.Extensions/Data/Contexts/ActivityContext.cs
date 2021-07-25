@@ -1,7 +1,7 @@
-﻿using Kysect.GithubActivityAnalyzer.Data.Entities;
+﻿using Kysect.GithubActivityAnalyzer.Extensions.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kysect.GithubActivityAnalyzer.Data.Contexts
+namespace Kysect.GithubActivityAnalyzer.Extensions.Data.Contexts
 {
     public class ActivityContext : DbContext
     {
@@ -9,9 +9,6 @@ namespace Kysect.GithubActivityAnalyzer.Data.Contexts
         public DbSet<UserСache> UserСache { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserСache>()
-                .HasKey(b => b.Username)
-                .HasName("PrimaryKey_Username");
         }
     }
 }

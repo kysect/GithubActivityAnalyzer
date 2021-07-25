@@ -1,4 +1,4 @@
-﻿using Kysect.GithubActivityAnalyzer.Data.Contexts;
+﻿using Kysect.GithubActivityAnalyzer.Extensions.Data.Contexts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

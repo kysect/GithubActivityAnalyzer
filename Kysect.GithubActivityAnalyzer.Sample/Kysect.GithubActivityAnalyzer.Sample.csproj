@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Kysect.GithubActivityAnalyzer.Extensions\Kysect.GithubActivityAnalyzer.Extensions.csproj" />
     <ProjectReference Include="..\Kysect.GithubActivityAnalyzer\Kysect.GithubActivityAnalyzer.csproj" />
   </ItemGroup>
 

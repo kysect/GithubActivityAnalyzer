@@ -3,7 +3,7 @@ using ClosedXML.Excel;
 using System.Linq;
 using Kysect.GithubActivityAnalyzer.Aggregators;
 
-namespace Kysect.GithubActivityAnalyzer.Services
+namespace Kysect.GithubActivityAnalyzer.Extensions.Services
 {
     public class ExcelExportManager
     {
@@ -36,14 +36,14 @@ namespace Kysect.GithubActivityAnalyzer.Services
                 worksheet.Cell(4, 1).Value = "Котик месяца:";
                 worksheet.Cell(5, 1).Value = "Кандидат на ремень по жопе:";
                 worksheet.Row(1).SetDataType(XLDataType.Text);
-                for(int column = 2; column<teamInfo.Statistics.Count + 2; column++)
+                for (int column = 2; column < teamInfo.Statistics.Count + 2; column++)
                 {
-                    worksheet.Cell(1, column).Value = teamInfo.Statistics[column-2].Month;
+                    worksheet.Cell(1, column).Value = teamInfo.Statistics[column - 2].Month;
                     worksheet.Cell(1, column).Style.DateFormat.Format = "MMMM-yyyy";
                     worksheet.Cell(2, column).Value = teamInfo.Statistics[column - 2].AverageValue;
                     worksheet.Cell(3, column).Value = teamInfo.Statistics[column - 2].TotalContributions;
                     worksheet.Cell(4, column).Value =
-                        teamInfo.Statistics[column-2].MaxValueMember.Username + ":" + teamInfo.Statistics[column - 2].MaxValueMember.MonthlyContributions;
+                        teamInfo.Statistics[column - 2].MaxValueMember.Username + ":" + teamInfo.Statistics[column - 2].MaxValueMember.MonthlyContributions;
                     worksheet.Cell(5, column).Value =
                         teamInfo.Statistics[column - 2].MinValueMember.Username + ":" + teamInfo.Statistics[column - 2].MinValueMember.MonthlyContributions;
                 }
@@ -93,7 +93,7 @@ namespace Kysect.GithubActivityAnalyzer.Services
                 for (int j = 2; j <= lastRow; j++)
                 {
                     IXLAddress address1 = worksheetDetailed.Cell(j, 2).Address;
-                    IXLAddress address2 = worksheetDetailed.Cell(j, lastColumn-1).Address;
+                    IXLAddress address2 = worksheetDetailed.Cell(j, lastColumn - 1).Address;
                     var cellWithFormula = worksheetDetailed.Cell(j, lastColumn);
                     cellWithFormula.FormulaA1 = $"=SUM({address1}:{address2})";
                 }
@@ -107,7 +107,7 @@ namespace Kysect.GithubActivityAnalyzer.Services
         {
             IXLWorksheet worksheetSummary = Workbook.Worksheets.Add($"Summary");
             int month = 0;
-            for (int col = 2; col < Info[0].Statistics.Count+2; col++)
+            for (int col = 2; col < Info[0].Statistics.Count + 2; col++)
             {
                 worksheetSummary.Cell(1, col).Value = Info[0].Statistics[month].Month;
                 worksheetSummary.Cell(1, col).Style.DateFormat.Format = "MMMM-yyyy";
@@ -135,7 +135,7 @@ namespace Kysect.GithubActivityAnalyzer.Services
         }
 
         public IXLWorkbook ExportFullInfo()
-        { 
+        {
             ExportSummaryInfo();
             ExportShortInfo();
             ExportDetailedInfo();
