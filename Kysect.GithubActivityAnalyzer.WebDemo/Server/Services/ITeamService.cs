@@ -13,8 +13,6 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Services
 
         //TODO: разобраться с возвращаемым значением
         public void GetAllTeams();
-
-        //TODO: разобраться с возвращаемым значением
-        public IQueryable<Member> GetTeam(string teamName);
+        public Team GetTeam(Team teamName);
     }
 }
