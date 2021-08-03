@@ -1,15 +1,16 @@
 ﻿@page "/Team"
-@using Kysect.GithubActivityAnalyzer.WebDemo.Shared
-@using Kysect.GithubActivityAnalyzer.Aggregators.Models
 @inject HttpClient Http
-<h1>TestFunc</h1>
+<h1>United stat</h1>
 <p>
-    <input @bind="_teamName" @bind:event="oninput" />
+    <input @bind="@_teamName" @bind:event="oninput" />
 </p>
+
 <p>
-    <input @bind="_username" @bind:event="oninput" />
+    <input @bind="@_username" @bind:event="oninput" />
 </p>
-<button class="btn btn-primary" @onclick="AddStudent">Add member</button>
+
+<button class="btn btn-primary" @onclick="@AddStudent">Add member</button>
+
 <p>
     <button class="btn btn-primary" @onclick="GetStat">Get Stat</button>
 </p>
@@ -57,28 +58,3 @@ else
 
 }
 
-@code {
-    private string _username = String.Empty;
-    private string _teamName = String.Empty;
-    private List<string> _usernames = new List<string>();
-    private TeamResponse _team;
-    private bool _statsIsVisible = false;
-
-
-    protected async Task GetStat()
-    {
-        Team newTeamInfo = new Team()
-        {
-            TeamName = _teamName,
-            Usernames = _usernames
-        };
-        var response = await Http.PostAsJsonAsync("Team", newTeamInfo);
-        _team = await response.Content.ReadFromJsonAsync<TeamResponse>();
-        _statsIsVisible = true;
-    }
-
-    private void AddStudent()
-    {
-        _usernames.Add(_username);
-    }
-}
