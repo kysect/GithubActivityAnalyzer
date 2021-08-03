@@ -37,9 +37,10 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Services
         {
             throw new System.NotImplementedException();
         }
-        IQueryable<Member> ITeamService.GetTeam(string teamName)
+        Team ITeamService.GetTeam(Team team)
         {
-            throw new System.NotImplementedException();
+            team.Usernames = _teamRepository.GetAllByTeam(team.TeamName).Select(p => p.Username).ToList();
+            return team;
         }
     }
 }

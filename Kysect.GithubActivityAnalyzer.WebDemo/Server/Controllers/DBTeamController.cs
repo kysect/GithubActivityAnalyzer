@@ -42,9 +42,10 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Controllers
         {
         }
 
-        [HttpGet("GetTeam")]
-        public void GetTeam()
+        [HttpPost("GetTeam")]
+        public Team GetTeam(Team team)
         {
+            return _teamService.GetTeam(team);
         }
     }
 }
