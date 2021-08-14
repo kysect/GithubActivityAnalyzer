@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Kysect.GithubActivityAnalyzer.WebDemo.Shared;
 using Kysect.GithubActivityAnalyzer.Aggregators.Models;
 using System.Net.Http.Json;
+
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Client.Pages
 {
     public partial class UnitedStat
@@ -13,8 +14,6 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Client.Pages
         private List<string> _usernames = new List<string>();
         private TeamResponse _team;
         private bool _statsIsVisible = false;
-
-
         protected async Task GetStat()
         {
             Team newTeamInfo = new Team()
