@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30626.31
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31512.422
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kysect.GithubActivityAnalyzer", "Kysect.GithubActivityAnalyzer\Kysect.GithubActivityAnalyzer.csproj", "{CBC5BC39-48CC-48F0-8136-0E4564818057}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kysect.GithubActivityAnalyzer.WebDemo.Shared", "Kysect.GithubActivityAnalyzer.WebDemo\Shared\Kysect.GithubActivityAnalyzer.WebDemo.Shared.csproj", "{FA126478-7E0D-442A-B91C-D709FE1D385A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebDemo", "WebDemo", "{6A4F3831-1452-42B5-8CFC-6B304E8B564F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kysect.GithubActivityAnalyzer.Extensions", "Kysect.GithubActivityAnalyzer.Extensions\Kysect.GithubActivityAnalyzer.Extensions.csproj", "{D8B41138-0685-4DDE-8788-2147EDA250D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{FA126478-7E0D-442A-B91C-D709FE1D385A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA126478-7E0D-442A-B91C-D709FE1D385A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA126478-7E0D-442A-B91C-D709FE1D385A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8B41138-0685-4DDE-8788-2147EDA250D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8B41138-0685-4DDE-8788-2147EDA250D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8B41138-0685-4DDE-8788-2147EDA250D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8B41138-0685-4DDE-8788-2147EDA250D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
