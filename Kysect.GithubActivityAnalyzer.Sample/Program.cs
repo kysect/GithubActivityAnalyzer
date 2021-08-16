@@ -1,11 +1,10 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Kysect.GithubActivityAnalyzer.Aggregators;
 using Kysect.GithubActivityAnalyzer.Aggregators.Models;
 using Kysect.GithubActivityAnalyzer.ApiAccessor;
-using Kysect.GithubActivityAnalyzer.Services;
+using Kysect.GithubActivityAnalyzer.Extensions.Services;
 
 namespace Kysect.GithubActivityAnalyzer.Sample
 {

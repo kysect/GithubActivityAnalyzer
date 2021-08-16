@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using Kysect.GithubActivityAnalyzer.Data.Entities;
-using Kysect.GithubActivityAnalyzer.Data.Contexts;
+using Kysect.GithubActivityAnalyzer.Extensions.Data.Entities;
+using Kysect.GithubActivityAnalyzer.Extensions.Data.Contexts;
 
-namespace Kysect.GithubActivityAnalyzer.Data.Repositories
+namespace Kysect.GithubActivityAnalyzer.Extensions.Data.Repositories
 {
     public class TeamRepository : IRepository<Member>
     {
@@ -54,7 +54,7 @@ namespace Kysect.GithubActivityAnalyzer.Data.Repositories
         }
         public void DeleteByTeam(string team)
         {
-            foreach( var member in GetAllByTeam(team))
+            foreach (var member in GetAllByTeam(team))
             {
                 Delete(member);
             }
