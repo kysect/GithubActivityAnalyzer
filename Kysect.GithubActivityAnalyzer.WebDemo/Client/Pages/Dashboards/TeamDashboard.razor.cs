@@ -14,7 +14,7 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Client.Pages.Dashboards
         private TeamResponse _team;
         private bool _statsIsVisible = true;
 
-        private async void GenerateBarChart()
+        private async Task GenerateBarChart()
         {
             await GetStat();
             StateHasChanged();
