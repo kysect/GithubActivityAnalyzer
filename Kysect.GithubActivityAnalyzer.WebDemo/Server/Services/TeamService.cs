@@ -33,13 +33,18 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Services
         }
 
         //TODO: Уточнить с ТЗ и реализовать
-        void ITeamService.GetAllTeams()
+        public void GetAllTeams()
         {
             throw new System.NotImplementedException();
         }
-        IQueryable<Member> ITeamService.GetTeam(string teamName)
+        public bool TryGetTeam(Team teamName, out Team team)
         {
-            throw new System.NotImplementedException();
+            team = new Team() { TeamName = teamName.TeamName };
+            team.Usernames = _teamRepository.GetAllByTeam(teamName.TeamName).Select(p => p.Username).ToList();
+            if (team.Usernames.Any())
+                return true;
+            else
+                return false;
         }
     }
 }

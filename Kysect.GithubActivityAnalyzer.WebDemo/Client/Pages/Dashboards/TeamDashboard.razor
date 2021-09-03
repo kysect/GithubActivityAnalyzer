@@ -1,0 +1,38 @@
+﻿@page "/TeamDashboard"
+@inject HttpClient Http
+@inject IJSRuntime jsRuntime
+<h1>Team Dashboard</h1>
+<p>
+    <input @bind="@_teamName" @bind:event="oninput" />
+</p>
+
+@if (_teamName is null)
+{
+    <p><em>Please write team name</em></p>
+}
+else
+{
+    <p>Team name: @_teamName </p>
+}
+
+<p>
+    <button class="btn btn-primary" @onclick="GenerateBarChart">Generate Bar Chart</button>
+</p>
+
+@if (_statsIsVisible)
+{
+    <div id="chartdiv"></div>
+}
+else 
+{
+    <p><font size="1" color="red" face="Arial">No such team</font></p>
+}
+
+<!-- Styles -->
+<style>
+    #chartdiv {
+        width: 100%;
+        height: 500px;
+        font-size: 11px;
+    }
+</style>
