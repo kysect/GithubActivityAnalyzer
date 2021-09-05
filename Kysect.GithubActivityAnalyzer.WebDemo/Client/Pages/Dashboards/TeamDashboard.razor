@@ -1,7 +1,8 @@
 ﻿@page "/TeamDashboard"
+@using Radzen.Blazor
 @inject HttpClient Http
-@inject IJSRuntime jsRuntime
 <h1>Team Dashboard</h1>
+
 <p>
     <input @bind="@_teamName" @bind:event="oninput" />
 </p>
@@ -18,21 +19,27 @@ else
 <p>
     <button class="btn btn-primary" @onclick="GenerateBarChart">Generate Bar Chart</button>
 </p>
+@if (_errorMessageVisible)
+{
+    <p><font size="3" color="red" face="Arial">No such team</font></p>
+}
 
 @if (_statsIsVisible)
 {
-    <div id="chartdiv"></div>
+    <div class="row">
+        <div class="col-md-6 col-sm-12 p-4">
+            <RadzenChart>
+                <RadzenBarSeries Data="@_teamInfo" CategoryProperty="Username" Title=@DateTime.Now.Year.ToString() LineType="LineType.Dashed" ValueProperty="TotalContributions" />
+                <RadzenValueAxis>
+                    <RadzenGridLines Visible="true" />
+                    <RadzenAxisTitle Text="Total Contributions" />
+                </RadzenValueAxis>
+                <RadzenBarOptions Radius="5" />
+            </RadzenChart>
+        </div>
+    </div>
 }
-else 
+else
 {
-    <p><font size="1" color="red" face="Arial">No such team</font></p>
+    <p><img src="images/Block-icon.jpg" height="60% " width="60%"></p>
 }
-
-<!-- Styles -->
-<style>
-    #chartdiv {
-        width: 100%;
-        height: 500px;
-        font-size: 11px;
-    }
-</style>
