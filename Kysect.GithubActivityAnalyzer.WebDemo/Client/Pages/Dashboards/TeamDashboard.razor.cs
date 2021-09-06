@@ -5,6 +5,7 @@ using Kysect.GithubActivityAnalyzer.Aggregators.Models;
 using Microsoft.JSInterop;
 using System.Net;
 using System.Net.Http.Json;
+using System.Collections.Generic;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Client.Pages.Dashboards
 {
@@ -12,7 +13,9 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Client.Pages.Dashboards
     {
         private string _teamName = String.Empty;
         private TeamResponse _team;
-        private bool _statsIsVisible = true;
+        private bool _statsIsVisible = false;
+        private bool _errorMessageVisible = false;
+        private List<ShortMemberInfo> _teamInfo;
 
         private async Task GenerateBarChart()
         {
@@ -20,8 +23,7 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Client.Pages.Dashboards
             StateHasChanged();
             if (_statsIsVisible)
             {
-                var teamInfo = _team.Members;
-                await jsRuntime.InvokeVoidAsync("GenerateBarChart", teamInfo);
+                _teamInfo = _team.Members;
             }
         }
         private async Task GetStat()
@@ -36,6 +38,7 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Client.Pages.Dashboards
             else
             {
                 _statsIsVisible = false;
+                _errorMessageVisible = true;
             }
 
         }
@@ -46,10 +49,11 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Client.Pages.Dashboards
             {
                 return await teamResponse.Content.ReadFromJsonAsync<Team>();
             }
-            else 
-            { 
+            else
+            {
                 return null;
             }
         }
+
     }
 }

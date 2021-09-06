@@ -7,13 +7,17 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.8" PrivateAssets="all" />
-    <PackageReference Include="ChartJs.Blazor" Version="1.1.0" />
+    <PackageReference Include="Radzen.Blazor" Version="3.9.8" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Kysect.GithubActivityAnalyzer\Kysect.GithubActivityAnalyzer.csproj" />
     <ProjectReference Include="..\Shared\Kysect.GithubActivityAnalyzer.WebDemo.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>
