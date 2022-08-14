@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Linq;
-using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
+using Kysect.GithubActivityAnalyzer.ProfileActivityParsing.Models;
 
-namespace Kysect.GithubActivityAnalyzer.Aggregators
+namespace Kysect.GithubActivityAnalyzer.ProfileActivityParsing
 {
-    public class Member
+    public class UserProfileActivity
     {
         public string Username { get; set; }
         public ActivityInfo ActivityInfo { get; set; }
-        
+
         public int TotalContributions => ActivityInfo.Total;
 
-        public Member()
+        public UserProfileActivity()
         {
         }
 
-        public Member(string username, ActivityInfo activityInfo)
+        public UserProfileActivity(string username, ActivityInfo activityInfo)
         {
             Username = username;
             ActivityInfo = activityInfo;

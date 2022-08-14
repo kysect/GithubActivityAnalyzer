@@ -8,9 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Kysect.GithubActivityAnalyzer.WebDemo.Server.Services;
-using Kysect.GithubActivityAnalyzer.ApiAccessor;
 using Kysect.GithubActivityAnalyzer.Extensions.Data.Repositories;
 using Kysect.GithubActivityAnalyzer.Extensions.Data.Contexts;
+using Kysect.GithubActivityAnalyzer.ProfileActivityParsing;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Server
 {
@@ -54,7 +54,7 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Server
         
             services.AddScoped<UserCacheRepository>();
             services.AddScoped<TeamRepository>();
-            services.AddScoped<GithubActivityProvider>();
+            services.AddScoped<ProfileActivityParser>();
 
             services.AddScoped<IActivityService, ActivityService>();
             services.AddScoped<ITeamService, TeamService>();

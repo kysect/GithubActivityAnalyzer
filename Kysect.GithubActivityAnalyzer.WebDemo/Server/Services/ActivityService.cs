@@ -1,23 +1,23 @@
-﻿using Kysect.GithubActivityAnalyzer.ApiAccessor;
-using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
-using Kysect.GithubActivityAnalyzer.Extensions.Data.Repositories;
+﻿using Kysect.GithubActivityAnalyzer.Extensions.Data.Repositories;
 using System.Threading.Tasks;
+using Kysect.GithubActivityAnalyzer.ProfileActivityParsing;
+using Kysect.GithubActivityAnalyzer.ProfileActivityParsing.Models;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Services
 {
     public class ActivityService : IActivityService
     {
-        private readonly GithubActivityProvider _githubActivityProvider;
+        private readonly ProfileActivityParser _profileActivityParser;
         private readonly UserCacheRepository _userСacheRepository;
-        public ActivityService(UserCacheRepository userСacheRepository, GithubActivityProvider githubActivityProvider)
+        public ActivityService(UserCacheRepository userСacheRepository, ProfileActivityParser profileActivityParser)
         {
             this._userСacheRepository = userСacheRepository;
-            this._githubActivityProvider = githubActivityProvider;
+            this._profileActivityParser = profileActivityParser;
         }
 
         public async Task<ActivityInfo> GetActivityInfoFromGithub(string username)
         {
-            return await _githubActivityProvider.GetActivityInfo(username);
+            return await _profileActivityParser.GetActivityInfo(username);
         }
 
         public ActivityInfo GetActivityInfoFromDB(string username)

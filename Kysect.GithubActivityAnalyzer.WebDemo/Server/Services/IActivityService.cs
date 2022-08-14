@@ -1,5 +1,5 @@
-﻿using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Kysect.GithubActivityAnalyzer.ProfileActivityParsing.Models;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Services
 {
