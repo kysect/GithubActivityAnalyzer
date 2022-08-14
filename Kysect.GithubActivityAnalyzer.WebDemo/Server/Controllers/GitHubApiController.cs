@@ -1,4 +1,4 @@
-﻿using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
+﻿using Kysect.GithubActivityAnalyzer.ProfileActivityParsing.Models;
 using Kysect.GithubActivityAnalyzer.WebDemo.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 
