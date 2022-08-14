@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ClosedXML.Excel;
 using System.Linq;
-using Kysect.GithubActivityAnalyzer.Aggregators;
+using Kysect.GithubActivityAnalyzer.ProfileActivityParsing;
 
 namespace Kysect.GithubActivityAnalyzer.Extensions.Services
 {

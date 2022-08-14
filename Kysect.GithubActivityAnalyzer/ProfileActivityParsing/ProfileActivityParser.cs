@@ -3,30 +3,40 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
+using Kysect.GithubActivityAnalyzer.ProfileActivityParsing.Models;
 
-namespace Kysect.GithubActivityAnalyzer.ApiAccessor
+namespace Kysect.GithubActivityAnalyzer.ProfileActivityParsing
 {
-    public class GithubActivityProvider
+    public class ProfileActivityParser
     {
         private const string Url = "https://github-contributions.now.sh/api/v1/";
 
         private readonly HttpClient _client;
+        private readonly JsonSerializerOptions _jsonSerializerOptions;
 
-        public GithubActivityProvider()
+        public ProfileActivityParser() : this(new HttpClient())
         {
-            _client = new HttpClient();
+        }
+
+        public ProfileActivityParser(HttpClient client)
+        {
+            _client = client;
+            _jsonSerializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         }
 
         public async Task<ActivityInfo> GetActivityInfo(string username, DateTime? from = null, DateTime? to = null)
         {
-            string response = await _client.GetStringAsync(Url + username);
-            var activityInfo = JsonSerializer.Deserialize<ActivityInfo>(response, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            ActivityInfo info = await GetActivityInfo(username);
+            return info.FilterValues(from, to);
+        }
 
-            return activityInfo.FilterValues(from, to);
+        public async Task<ActivityInfo> GetActivityInfo(string username)
+        {
+            return await _client.GetFromJsonAsync<ActivityInfo>(Url + username, _jsonSerializerOptions);
         }
 
         public Dictionary<string, ActivityInfo> GetActivityInfo(IReadOnlyCollection<string> usernames, bool isParallel, DateTime? from = null, DateTime? to = null)

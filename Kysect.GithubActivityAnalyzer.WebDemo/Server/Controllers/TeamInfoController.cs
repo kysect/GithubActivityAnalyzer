@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Kysect.GithubActivityAnalyzer.Aggregators.Models;
-using Kysect.GithubActivityAnalyzer.ApiAccessor;
+using Kysect.GithubActivityAnalyzer.ProfileActivityParsing;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Controllers
 {
@@ -8,12 +8,12 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Controllers
     [Route("[controller]")]
     public class TeamInfoController : Controller
     {
-        private readonly GithubActivityProvider _provider = new GithubActivityProvider();
+        private readonly ProfileActivityParser _parser = new ProfileActivityParser();
 
         [HttpPost("GetTeamInfo")]
         public TeamResponse GetTeamInfo(Shared.Team info)
         {
-            return new TeamResponse(new Aggregators.Team(info.TeamName, info.Usernames, _provider)); 
+            return new TeamResponse(new Team(info.TeamName, info.Usernames, _parser)); 
         }
     }
 }

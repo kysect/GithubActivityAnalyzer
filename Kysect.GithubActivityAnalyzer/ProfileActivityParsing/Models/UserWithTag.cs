@@ -1,4 +1,4 @@
-﻿using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
+﻿using Kysect.GithubActivityAnalyzer.ProfileActivityParsing.Models;
 
 namespace Kysect.GithubActivityAnalyzer.Aggregators.Models
 {

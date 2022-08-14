@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Kysect.GithubActivityAnalyzer.Aggregators.Models;
-using Kysect.GithubActivityAnalyzer.ApiAccessor;
-using Kysect.GithubActivityAnalyzer.ApiAccessor.ApiResponses;
+using Kysect.GithubActivityAnalyzer.ProfileActivityParsing.Models;
 
-namespace Kysect.GithubActivityAnalyzer.Aggregators
+namespace Kysect.GithubActivityAnalyzer.ProfileActivityParsing
 {
     public class Team
     {
         public string TeamName { get; set; }
-        public List<Member> Members { get; set; }
+        public List<UserProfileActivity> Members { get; set; }
         public List<MonthlyStatistics> Statistics => GetDetailedStat();
         public int TotalContributions => TotalActivity();
 
@@ -21,28 +20,28 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
         public Team(string teamName)
         {
             TeamName = teamName;
-            Members = new List<Member>();
+            Members = new List<UserProfileActivity>();
         }
 
-        public Team(string teamName, List<Member> members)
+        public Team(string teamName, List<UserProfileActivity> members)
         {
             TeamName = teamName;
             Members = members;
         }
 
-        public Team(string teamName, List<string> members, GithubActivityProvider provider)
+        public Team(string teamName, List<string> members, ProfileActivityParser parser)
         {
             TeamName = teamName;
-            Members = new List<Member>();
-            foreach ((string username, ActivityInfo activity) in provider.GetActivityInfo(members, true))
+            Members = new List<UserProfileActivity>();
+            foreach ((string username, ActivityInfo activity) in parser.GetActivityInfo(members, true))
             {
-                Members.Add(new Member(username, activity));
+                Members.Add(new UserProfileActivity(username, activity));
             }
         }
 
-        public static List<Team> CreateFromUserList(List<UserWithTag> users, GithubActivityProvider provider)
+        public static List<Team> CreateFromUserList(List<UserWithTag> users, ProfileActivityParser parser)
         {
-            Dictionary<string, ActivityInfo> mapToActivity = provider.GetActivityInfo(users.Select(u => u.Username).ToList(), true);
+            Dictionary<string, ActivityInfo> mapToActivity = parser.GetActivityInfo(users.Select(u => u.Username).ToList(), true);
 
             List<UserWithTagAndActivity> userWithTagAndActivities = users
                 .Where(u => mapToActivity.ContainsKey(u.Username))
@@ -55,7 +54,7 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
 
             return userWithTagAndActivities
                 .ToLookup(user => user.Tag, user => user)
-                .Select(group => new Team(group.Key, group.Select(u => new Member(u.Username, u.Activity)).ToList()))
+                .Select(group => new Team(group.Key, group.Select(u => new UserProfileActivity(u.Username, u.Activity)).ToList()))
                 .ToList();
         }
 
@@ -66,16 +65,16 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
                 .Sum();
         }
 
-        public void AddMembers(GithubActivityProvider provider, bool isParallel, params string[] usernames)
+        public void AddMembers(ProfileActivityParser parser, bool isParallel, params string[] usernames)
         {
-            var listInfo = provider.GetActivityInfo(usernames, isParallel);
+            var listInfo = parser.GetActivityInfo(usernames, isParallel);
             foreach (var item in listInfo)
             {
-               Members.Add(new Member(item.Key, item.Value));
+                Members.Add(new UserProfileActivity(item.Key, item.Value));
             }
         }
 
-        public Member GetMinValueMember(DateTime? from = null, DateTime? to = null)
+        public UserProfileActivity GetMinValueMember(DateTime? from = null, DateTime? to = null)
         {
             from ??= DateTime.MinValue;
             to ??= DateTime.Now;
@@ -85,7 +84,7 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
                 .Last();
 
         }
-        public Member GetMaxValueMember(DateTime? from = null, DateTime? to = null)
+        public UserProfileActivity GetMaxValueMember(DateTime? from = null, DateTime? to = null)
         {
             from ??= DateTime.MinValue;
             to ??= DateTime.Now;
@@ -147,7 +146,7 @@ namespace Kysect.GithubActivityAnalyzer.Aggregators
             endTime = endTime ?? DateTime.Now;
             for (DateTime to = from.AddMonths(1); from <= endTime || from.Month == endTime.Value.Month; to = from.AddMonths(1))
             {
-                var detailedStat = this.Members
+                var detailedStat = Members
                     .Select(member => new MemberMonthlyActivity(member.Username, member.GetActivityForPeriod(from, to)))
                     .ToList();
                 var monthStat = new MonthlyStatistics(from, detailedStat);
