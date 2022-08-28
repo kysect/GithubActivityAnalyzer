@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Kysect.GithubActivityAnalyzer.ProfileActivityParsing.Models;
+using Kysect.GithubUtils;
 
 namespace Kysect.GithubActivityAnalyzer.ProfileActivityParsing
 {

@@ -1,4 +1,5 @@
 ﻿using Kysect.GithubActivityAnalyzer.ProfileActivityParsing;
+using Kysect.GithubUtils;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -8,7 +9,7 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Controllers
     [Route("[controller]")]
     public class DetailedTeamStatController : Controller
     {
-        private readonly ProfileActivityParser _parser = new ProfileActivityParser();
+        private readonly GithubActivityProvider _parser = new GithubActivityProvider();
 
          /*[HttpPost]
        public IEnumerable<GroupInfo> GetGroupInfos(DetaiedStatRequest request)

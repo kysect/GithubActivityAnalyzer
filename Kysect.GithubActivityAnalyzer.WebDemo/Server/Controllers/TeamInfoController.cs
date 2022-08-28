@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Kysect.GithubActivityAnalyzer.Aggregators.Models;
 using Kysect.GithubActivityAnalyzer.ProfileActivityParsing;
+using Kysect.GithubUtils;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Controllers
 {
@@ -8,7 +9,7 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Controllers
     [Route("[controller]")]
     public class TeamInfoController : Controller
     {
-        private readonly ProfileActivityParser _parser = new ProfileActivityParser();
+        private readonly GithubActivityProvider _parser = new GithubActivityProvider();
 
         [HttpPost("GetTeamInfo")]
         public TeamResponse GetTeamInfo(Shared.Team info)

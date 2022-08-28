@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Kysect.GithubActivityAnalyzer.ProfileActivityParsing.Models;
+using Kysect.GithubUtils;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Services
 {

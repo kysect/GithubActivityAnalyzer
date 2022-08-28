@@ -1,5 +1,5 @@
-﻿using Kysect.GithubActivityAnalyzer.ProfileActivityParsing.Models;
-using Kysect.GithubActivityAnalyzer.WebDemo.Server.Services;
+﻿using Kysect.GithubActivityAnalyzer.WebDemo.Server.Services;
+using Kysect.GithubUtils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Controllers

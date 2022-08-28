@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Kysect.GithubActivityAnalyzer.Aggregators.Models;
-using Kysect.GithubActivityAnalyzer.ProfileActivityParsing.Models;
+using Kysect.GithubUtils;
 
 namespace Kysect.GithubActivityAnalyzer.ProfileActivityParsing
 {
@@ -29,19 +29,19 @@ namespace Kysect.GithubActivityAnalyzer.ProfileActivityParsing
             Members = members;
         }
 
-        public Team(string teamName, List<string> members, ProfileActivityParser parser)
+        public Team(string teamName, List<string> members, GithubActivityProvider parser)
         {
             TeamName = teamName;
             Members = new List<UserProfileActivity>();
-            foreach ((string username, ActivityInfo activity) in parser.GetActivityInfo(members, true))
+            foreach ((string username, ActivityInfo activity) in parser.GetActivityInfo(members))
             {
                 Members.Add(new UserProfileActivity(username, activity));
             }
         }
 
-        public static List<Team> CreateFromUserList(List<UserWithTag> users, ProfileActivityParser parser)
+        public static List<Team> CreateFromUserList(List<UserWithTag> users, GithubActivityProvider parser)
         {
-            Dictionary<string, ActivityInfo> mapToActivity = parser.GetActivityInfo(users.Select(u => u.Username).ToList(), true);
+            Dictionary<string, ActivityInfo> mapToActivity = parser.GetActivityInfo(users.Select(u => u.Username).ToList());
 
             List<UserWithTagAndActivity> userWithTagAndActivities = users
                 .Where(u => mapToActivity.ContainsKey(u.Username))
@@ -65,9 +65,9 @@ namespace Kysect.GithubActivityAnalyzer.ProfileActivityParsing
                 .Sum();
         }
 
-        public void AddMembers(ProfileActivityParser parser, bool isParallel, params string[] usernames)
+        public void AddMembers(GithubActivityProvider parser, bool isParallel, params string[] usernames)
         {
-            var listInfo = parser.GetActivityInfo(usernames, isParallel);
+            var listInfo = parser.GetActivityInfo(usernames);
             foreach (var item in listInfo)
             {
                 Members.Add(new UserProfileActivity(item.Key, item.Value));

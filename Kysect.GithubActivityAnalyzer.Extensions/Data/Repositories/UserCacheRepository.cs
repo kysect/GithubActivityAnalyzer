@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text.Json;
 using Kysect.GithubActivityAnalyzer.Extensions.Data.Contexts;
 using Kysect.GithubActivityAnalyzer.Extensions.Data.Entities;
-using Kysect.GithubActivityAnalyzer.ProfileActivityParsing.Models;
+using Kysect.GithubUtils;
 using Microsoft.EntityFrameworkCore;
 
 namespace Kysect.GithubActivityAnalyzer.Extensions.Data.Repositories

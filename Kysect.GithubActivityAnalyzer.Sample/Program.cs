@@ -4,6 +4,7 @@ using System.Linq;
 using Kysect.GithubActivityAnalyzer.Aggregators.Models;
 using Kysect.GithubActivityAnalyzer.Extensions.Services;
 using Kysect.GithubActivityAnalyzer.ProfileActivityParsing;
+using Kysect.GithubUtils;
 
 namespace Kysect.GithubActivityAnalyzer.Sample
 {
@@ -11,7 +12,7 @@ namespace Kysect.GithubActivityAnalyzer.Sample
     {
         static void Main()
         {
-            var githubActivityProvider = new ProfileActivityParser();
+            var githubActivityProvider = new GithubActivityProvider();
             List<UserWithTag> grouped = ReadFromFile();
 
             List<Team> studyGroups = Team.CreateFromUserList(grouped, githubActivityProvider);

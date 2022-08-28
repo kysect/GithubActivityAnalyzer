@@ -11,6 +11,7 @@ using Kysect.GithubActivityAnalyzer.WebDemo.Server.Services;
 using Kysect.GithubActivityAnalyzer.Extensions.Data.Repositories;
 using Kysect.GithubActivityAnalyzer.Extensions.Data.Contexts;
 using Kysect.GithubActivityAnalyzer.ProfileActivityParsing;
+using Kysect.GithubUtils;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Server
 {
@@ -54,7 +55,7 @@ namespace Kysect.GithubActivityAnalyzer.WebDemo.Server
         
             services.AddScoped<UserCacheRepository>();
             services.AddScoped<TeamRepository>();
-            services.AddScoped<ProfileActivityParser>();
+            services.AddScoped<GithubActivityProvider>();
 
             services.AddScoped<IActivityService, ActivityService>();
             services.AddScoped<ITeamService, TeamService>();
