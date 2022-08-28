@@ -1,5 +1,4 @@
-﻿using Kysect.GithubActivityAnalyzer.ProfileActivityParsing;
-using Kysect.GithubUtils;
+﻿using Kysect.GithubUtils;
 using Microsoft.AspNetCore.Mvc;
 
 

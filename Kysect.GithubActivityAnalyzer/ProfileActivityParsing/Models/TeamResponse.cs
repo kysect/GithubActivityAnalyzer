@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Kysect.GithubActivityAnalyzer.ProfileActivityParsing;
 
-namespace Kysect.GithubActivityAnalyzer.Aggregators.Models
+namespace Kysect.GithubActivityAnalyzer.ProfileActivityParsing.Models
 {
     public class TeamResponse
     {

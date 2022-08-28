@@ -1,8 +1,5 @@
-using Kysect.GithubActivityAnalyzer.WebDemo.Server.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Kysect.GithubActivityAnalyzer.WebDemo.Server.Services;
 using Kysect.GithubActivityAnalyzer.Extensions.Data.Repositories;
 using Kysect.GithubActivityAnalyzer.Extensions.Data.Contexts;
-using Kysect.GithubActivityAnalyzer.ProfileActivityParsing;
 using Kysect.GithubUtils;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Server

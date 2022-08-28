@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kysect.GithubActivityAnalyzer.Aggregators.Models
+namespace Kysect.GithubActivityAnalyzer.ProfileActivityParsing.Models
 {
     public class MonthlyStatistics
     {

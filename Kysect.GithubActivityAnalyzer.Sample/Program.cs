@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Kysect.GithubActivityAnalyzer.Aggregators.Models;
 using Kysect.GithubActivityAnalyzer.Extensions.Services;
 using Kysect.GithubActivityAnalyzer.ProfileActivityParsing;
+using Kysect.GithubActivityAnalyzer.ProfileActivityParsing.Models;
 using Kysect.GithubUtils;
 
 namespace Kysect.GithubActivityAnalyzer.Sample

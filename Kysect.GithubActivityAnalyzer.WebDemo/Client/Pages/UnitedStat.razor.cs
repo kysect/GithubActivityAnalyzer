@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Kysect.GithubActivityAnalyzer.WebDemo.Shared;
-using Kysect.GithubActivityAnalyzer.Aggregators.Models;
 using System.Net.Http.Json;
+using Kysect.GithubActivityAnalyzer.ProfileActivityParsing.Models;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Client.Pages
 {

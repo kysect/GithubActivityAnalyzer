@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Kysect.GithubActivityAnalyzer.WebDemo.Shared;
-using Kysect.GithubActivityAnalyzer.Aggregators.Models;
-using Microsoft.JSInterop;
 using System.Net;
 using System.Net.Http.Json;
 using System.Collections.Generic;
+using Kysect.GithubActivityAnalyzer.ProfileActivityParsing.Models;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Client.Pages.Dashboards
 {

@@ -1,6 +1,6 @@
 ﻿using Kysect.GithubUtils;
 
-namespace Kysect.GithubActivityAnalyzer.Aggregators.Models
+namespace Kysect.GithubActivityAnalyzer.ProfileActivityParsing.Models
 {
     public class UserWithTag
     {

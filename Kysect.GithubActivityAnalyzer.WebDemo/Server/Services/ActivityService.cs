@@ -1,6 +1,5 @@
 ﻿using Kysect.GithubActivityAnalyzer.Extensions.Data.Repositories;
 using System.Threading.Tasks;
-using Kysect.GithubActivityAnalyzer.ProfileActivityParsing;
 using Kysect.GithubUtils;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Services

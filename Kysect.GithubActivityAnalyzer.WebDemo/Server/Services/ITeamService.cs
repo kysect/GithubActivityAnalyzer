@@ -1,6 +1,4 @@
-using System.Linq;
 using Kysect.GithubActivityAnalyzer.WebDemo.Shared;
-﻿using Kysect.GithubActivityAnalyzer.Extensions.Data.Entities;
 
 namespace Kysect.GithubActivityAnalyzer.WebDemo.Server.Services
 {
